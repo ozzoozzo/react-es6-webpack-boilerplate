@@ -1,3 +1,7 @@
+# Original Source
+
+https://github.com/vasanthk/react-es6-webpack-boilerplate
+
 # React ES6 Webpack Boilerplate
 
 Boilerplate for kick starting a project with the following technologies:
