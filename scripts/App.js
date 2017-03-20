@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
+import Form from './Form';
 
-export default class App extends Component {
+class App extends Component {
+
 	render() {
 		return (
 			// Add your component markup and other subcomponent references here.
-			<h1>Hello, World!</h1>
-			<Form />
+			<div>
+				<h1>Hello, World!</h1>
+				<Form />
+			</div>
 		);
 	}
+
 }
+
+export default App;

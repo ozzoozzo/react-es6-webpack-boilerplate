@@ -59,7 +59,7 @@ module.exports = {
     publicPath: '/static/'
   },
   resolve: {
-    extensions: ['', '.js']
+    extensions: ['', '.js', '.jsx']
   },
   devtool: 'eval-source-map',
   plugins: [
@@ -67,12 +67,13 @@ module.exports = {
     new webpack.NoErrorsPlugin()
   ],
   module: {
-    loaders: [
-      {
-        test: /\.jsx?$/,
-        loaders: ['babel'],
-        include: path.join(__dirname, 'scripts')
-      }
-    ]
+    loaders: [{
+      test: /\.less$/,
+      loader: 'style!css!less'
+    }, {
+      test: /\.jsx?$/,
+      loaders: ['babel'],
+      include: path.join(__dirname, 'scripts')
+    }]
   }
 };
