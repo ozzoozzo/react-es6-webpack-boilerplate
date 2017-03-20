@@ -6,7 +6,9 @@ class Form extends Component {
 
 	renderInputs = () => {
 		const inputs = [];
-		for (let i = 0; i < 10; i++) inputs.push(<div key={i} className="gap"><Input value="" /></div>);
+		[...Array(10)].map((el, i) =>
+			inputs.push(<div key={i} className="gap"><Input value="" /></div>)
+        );
 		return inputs;
 	};
 
