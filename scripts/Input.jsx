@@ -17,7 +17,7 @@ class Input extends Component {
 	};
 
 	render() {
-		const style = {
+		const style = !this.props.colorChange ? {} : {
 			borderColor: this.borderColors[this.renderCount % this.borderColors.length],
 		};
 		this.renderCount++;

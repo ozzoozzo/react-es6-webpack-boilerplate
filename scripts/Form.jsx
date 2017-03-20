@@ -7,6 +7,7 @@ class Form extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			colorChange: true,
 			fields: {
 				one: 'the',
 				two: 'quick',
@@ -38,6 +39,12 @@ class Form extends Component {
 		});
 	};
 
+	toggleColorChange = (event) => {
+		this.setState({
+			colorChange: event.target.checked
+		});
+	};
+
 	handleInputFieldChange = (name, value) => {
 		console.log('>>> Form.handleInputFieldChange >>> name =', name, '>>> value =', value);
         const fields = Object.assign({}, this.state.fields, { [name]: value });
@@ -45,10 +52,10 @@ class Form extends Component {
 	};
 
 	renderInputs = () => {
-		const { fields } = this.state;
+		const { colorChange, fields } = this.state;
 		const inputs = [];
 		Object.keys(fields).map((field, i) =>
-			inputs.push(<div key={i} className="gap"><Input name={field} value={fields[field]} onChange={this.handleInputFieldChange} /></div>)
+			inputs.push(<div key={i} className="gap"><Input name={field} value={fields[field]} onChange={this.handleInputFieldChange} colorChange={colorChange} /></div>)
         );
 		return inputs;
 	};
@@ -59,6 +66,9 @@ class Form extends Component {
 				<h2>Form</h2>
 				<p>
 					<button onClick={this.simulateHandleInput}>simulate handleInput</button>
+					&nbsp;&nbsp;&nbsp;
+					<input id="toggle-color-change" type="checkbox" checked={this.state.colorChange} onChange={this.toggleColorChange} />
+					<label htmlFor="toggle-color-change">change border color when re-rendering is triggered</label>
 				</p>
 				{this.renderInputs()}
 			</div>
