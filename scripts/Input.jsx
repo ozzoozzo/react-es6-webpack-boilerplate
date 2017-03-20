@@ -11,7 +11,7 @@ class Input extends Component {
 	}
 
 	handleChange = (event) => {
-		console.log('>>> Input.handleChange >>> name =', event.target.name, '>>> value =', event.target.value);
+		if (this.props.consoleLog) console.log('>>> Input.handleChange >>> name =', event.target.name, '>>> value =', event.target.value);
 		//this.setState({ value: event.target.value });
 		this.props.onChange(event.target.name, event.target.value); // callback to parent component
 	};
@@ -21,7 +21,8 @@ class Input extends Component {
 			borderColor: this.borderColors[this.renderCount % this.borderColors.length],
 		};
 		this.renderCount++;
-		console.log('>>> Input.render >>> renderCount =', this.renderCount, '>>> borderColor =', style.borderColor);
+		const hint = !this.props.hintChange ? 'hint' : `renderCount = ${this.renderCount}`;
+		if (this.props.consoleLog) console.log('>>> Input.render >>> renderCount =', this.renderCount, '>>> borderColor =', style.borderColor);
 		return (
 			<span className="uwr-input-container uwr-input-blur" style={style}>
 				<span className="uwr-input-content">
@@ -30,7 +31,7 @@ class Input extends Component {
 					<span className={this.state.value ? 'uwr-input-label-top' : 'uwr-input-label-bottom'}>{`renderCount = ${this.renderCount}`}</span>
 				*/}
 					<input className="uwr-input" type="text" name={this.props.name} value={this.props.value} onChange={this.handleChange} autoComplete="off" />
-					<span className={this.props.value ? 'uwr-input-label-top' : 'uwr-input-label-bottom'}>{`renderCount = ${this.renderCount}`}</span>
+					<span className={this.props.value ? 'uwr-input-label-top' : 'uwr-input-label-bottom'}>{hint}</span>
 				</span>
 				<span className="uwr-input-message uwr-input-no-message"></span>
 				<div className="uwr-message-box uwr-message-box-hidden uwr-arrow-top-right uwr-message-box-type-no-message uwr-message-box-icon-none uwr-input-message-box-arrow" data-icon-type="none">

@@ -8,7 +8,7 @@ class App extends Component {
 		return (
 			// Add your component markup and other subcomponent references here.
 			<div className="app">
-				<h1>Hello, World!</h1>
+				<h1>Hello React</h1>
 				<Form />
 			</div>
 		);
