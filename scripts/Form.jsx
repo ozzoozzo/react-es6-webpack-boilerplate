@@ -5,8 +5,8 @@ import Input from './Input';
 class Form extends Component {
 
 	renderInputs = () => {
-		var inputs = [];
-		for (var i = 0; i < 10; i++) inputs.push(<div key={i} className="gap"><Input value="" /></div>);
+		const inputs = [];
+		for (let i = 0; i < 10; i++) inputs.push(<div key={i} className="gap"><Input value="" /></div>);
 		return inputs;
 	};
 
