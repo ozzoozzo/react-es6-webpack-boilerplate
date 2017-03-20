@@ -11,7 +11,7 @@ class Input extends Component {
 	}
 
 	handleChange = (event) => {
-		console.log('>>> Input.handleChange >>> event.target.value =', event.target.value);
+		console.log('>>> Input.handleChange >>> name =', event.target.name, '>>> value =', event.target.value);
 		this.setState({ value: event.target.value });
 	};
 
@@ -20,11 +20,11 @@ class Input extends Component {
 			borderColor: this.borderColors[this.renderCount % this.borderColors.length],
 		};
 		this.renderCount++;
-		console.log('>>> Input.render >>> renderCount =', this.renderCount, ' borderColor =', style.borderColor);
+		console.log('>>> Input.render >>> renderCount =', this.renderCount, '>>> borderColor =', style.borderColor);
 		return (
 			<span className="uwr-input-container uwr-input-blur" style={style}>
 				<span className="uwr-input-content">
-					<input className="uwr-input" type="text" value={this.state.value} onChange={this.handleChange} autoComplete="off" />
+					<input className="uwr-input" type="text" name={this.props.name} value={this.state.value} onChange={this.handleChange} autoComplete="off" />
 					<span className={this.state.value ? 'uwr-input-label-top' : 'uwr-input-label-bottom'}>{`renderCount = ${this.renderCount}`}</span>
 				</span>
 				<span className="uwr-input-message uwr-input-no-message"></span>

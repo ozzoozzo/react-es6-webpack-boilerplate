@@ -4,10 +4,45 @@ import Input from './Input';
 
 class Form extends Component {
 
+	constructor(props) {
+		super(props);
+		this.state = {
+			fields: {
+				one: 'the',
+				two: 'quick',
+				three: 'brown',
+				four: 'fox',
+				five: 'jumps',
+				six: 'over',
+				seven: 'the',
+				eight: 'lazy',
+				nine: 'dog'
+			}
+		};
+	}
+
+	simulateHandleInput = () => {
+		console.log('>>> Form.simulateHandleInput');
+		this.setState({
+			fields: {
+				one: 'the',
+				two: 'quick',
+				three: 'brown',
+				four: 'fox',
+				five: 'jumps',
+				six: 'over',
+				seven: 'the',
+				eight: 'lazy',
+				nine: 'dog'
+			}
+		});
+	};
+
 	renderInputs = () => {
+		const { fields } = this.state;
 		const inputs = [];
-		[...Array(10)].map((el, i) =>
-			inputs.push(<div key={i} className="gap"><Input value="" /></div>)
+		Object.keys(fields).map((field, i) =>
+			inputs.push(<div key={i} className="gap"><Input name={field} value={fields[field]} /></div>)
         );
 		return inputs;
 	};
@@ -16,6 +51,9 @@ class Form extends Component {
 		return (
 			<div>
 				<h2>Form</h2>
+				<p>
+					<button onClick={this.simulateHandleInput}>simulate handleInput</button>
+				</p>
 				{this.renderInputs()}
 			</div>
 		);
