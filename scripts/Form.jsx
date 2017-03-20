@@ -38,11 +38,17 @@ class Form extends Component {
 		});
 	};
 
+	handleInputFieldChange = (name, value) => {
+		console.log('>>> Form.handleInputFieldChange >>> name =', name, '>>> value =', value);
+        const fields = Object.assign({}, this.state.fields, { [name]: value });
+		this.setState({ fields });
+	};
+
 	renderInputs = () => {
 		const { fields } = this.state;
 		const inputs = [];
 		Object.keys(fields).map((field, i) =>
-			inputs.push(<div key={i} className="gap"><Input name={field} value={fields[field]} /></div>)
+			inputs.push(<div key={i} className="gap"><Input name={field} value={fields[field]} onChange={this.handleInputFieldChange} /></div>)
         );
 		return inputs;
 	};
