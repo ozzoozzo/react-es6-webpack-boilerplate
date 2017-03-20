@@ -6,7 +6,7 @@ class Form extends Component {
 		return (
 			<div>
 				<h2>Form</h2>
-				<Input value={new Date().toLocaleTimeString()} />
+				<Input value="" />
 			</div>
 		);
 	}
