@@ -1,0 +1,51 @@
+@font-face {
+	font-family: 'droid_sans_monoregular';
+	src: url('../fonts/droid-sans-mono-fontfacekit/web-font/droidsansmono_regular_macroman/DroidSansMono-webfont.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.code2 {
+
+	display: inline-block;
+	position: relative;
+
+	i {
+		position: absolute;
+		bottom: 0;
+		left: 35px;
+	}
+
+	b {
+		display: inline-block;
+		width: 31.5px;
+		height: 14px;
+		border-left: 1px solid #CCCCCC;
+	}
+
+	input {
+		position: relative;
+		width: 206px;
+		margin: 0;
+		padding: 10px 0 10px 15px;
+		border: 1px solid #CCCCCC;
+		background-color: transparent;
+		font: 14px/20px 'droid_sans_monoregular',sans-serif;
+		letter-spacing: 23px;
+		outline: none;
+		z-index: 1;
+	}
+
+	&::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 6px;
+		height: 42px;
+		border-left: 1px solid #CCCCCC;
+		background-color: #FFFFFF;
+		z-index: 2;
+	}
+
+}

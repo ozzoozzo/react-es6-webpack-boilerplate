@@ -49,6 +49,7 @@
     "eslint-plugin-jsx-a11y": "2.2.3",
     "eslint-plugin-promise": "3.5.0",
     "eslint-plugin-react": "6.10.0",
+    "file-loader": "0.10.1",
     "less": "2.7.2",
     "less-loader": "3.0.0",
     "react-transform-hmr": "1.0.4",
