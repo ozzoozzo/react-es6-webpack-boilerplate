@@ -20,9 +20,6 @@ class Code2 extends PureComponent {
 		if (this.props.consoleLog) console.log('>>> Code2.render');
 		return (
 			<span class="code2">
-				<i>
-					<b /><b /><b /><b /><b />
-				</i>
 				<input
 					type="text"
 					name={this.props.name}
@@ -33,6 +30,10 @@ class Code2 extends PureComponent {
 					maxLength={6}
 					autoComplete="off"
 				/>
+				<span class="tail" />
+				<i>
+					<b /><b /><b /><b /><b />
+				</i>
 			</span>
 		);
 	}
