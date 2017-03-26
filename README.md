@@ -2,6 +2,26 @@
 
 https://github.com/vasanthk/react-es6-webpack-boilerplate
 
+# Infos: IntelliJ, Webpack etc
+
+#### IntelliJ Settings
+
+Disable "safe write" -> see http://stackoverflow.com/questions/34213253/webpack-watch-not-working-on-webstorm-on-windows
+When "safe write" is enabled, then webpack hot reloading (watch mode) will NOT work properly on Windows!
+
+#### Reading
+
+Will Stern
+-> youtube tutorials -> https://www.youtube.com/watch?v=XVdwq8W2ZsM
+-> github -> https://github.com/learncodeacademy/react-js-tutorials
+-> github repositories -> https://github.com/willrstern?tab=repositories
+
+babel-plugin-react-html-attrs
+https://github.com/insin/babel-plugin-react-html-attrs
+
+babel-plugin-transform-class-properties
+https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-class-properties
+
 # React ES6 Webpack Boilerplate
 
 Boilerplate for kick starting a project with the following technologies:
