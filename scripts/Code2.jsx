@@ -18,6 +18,7 @@ class Code2 extends PureComponent {
 
 	render() {
 		if (this.props.consoleLog) console.log('>>> Code2.render');
+		const containerBg = this.props.containerBg ? { backgroundColor: this.props.containerBg } : null;
 		return (
 			<span class="code2">
 				<input
@@ -30,7 +31,7 @@ class Code2 extends PureComponent {
 					maxLength={6}
 					autoComplete="off"
 				/>
-				<u />
+				<u style={containerBg} />
 				<i>
 					<b /><b /><b /><b /><b />
 				</i>

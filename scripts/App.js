@@ -27,6 +27,10 @@ class App extends Component {
 				<Code2 name="code-input-v2-1" consoleLog />
 				<br /><br />
 				<Code2 name="code-input-v2-2" value="123" consoleLog />
+				<br /><br />
+				<div style={{ padding: '20px', backgroundColor: '#EFC6C4' }}>
+					<Code2 name="code-input-v2-3" containerBg="#EFC6C4" consoleLog />
+				</div>
 
 				<br />
 
