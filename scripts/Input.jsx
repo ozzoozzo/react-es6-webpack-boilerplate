@@ -24,18 +24,18 @@ class Input extends Component {
 		const hint = !this.props.hintChange ? 'hint' : `renderCount = ${this.renderCount}`;
 		if (this.props.consoleLog) console.log('>>> Input.render >>> renderCount =', this.renderCount, '>>> borderColor =', style.borderColor);
 		return (
-			<span className="uwr-input-container uwr-input-blur" style={style}>
-				<span className="uwr-input-content">
+			<span class="uwr-input-container uwr-input-blur" style={style}>
+				<span class="uwr-input-content">
 				{/*
-					<input className="uwr-input" type="text" name={this.props.name} value={this.state.value} onChange={this.handleChange} autoComplete="off" />
-					<span className={this.state.value ? 'uwr-input-label-top' : 'uwr-input-label-bottom'}>{`renderCount = ${this.renderCount}`}</span>
+					<input class="uwr-input" type="text" name={this.props.name} value={this.state.value} onChange={this.handleChange} autoComplete="off" />
+					<span class={this.state.value ? 'uwr-input-label-top' : 'uwr-input-label-bottom'}>{`renderCount = ${this.renderCount}`}</span>
 				*/}
-					<input className="uwr-input" type="text" name={this.props.name} value={this.props.value} onChange={this.handleChange} autoComplete="off" />
-					<span className={this.props.value ? 'uwr-input-label-top' : 'uwr-input-label-bottom'}>{hint}</span>
+					<input class="uwr-input" type="text" name={this.props.name} value={this.props.value} onChange={this.handleChange} autoComplete="off" />
+					<span class={this.props.value ? 'uwr-input-label-top' : 'uwr-input-label-bottom'}>{hint}</span>
 				</span>
-				<span className="uwr-input-message uwr-input-no-message"></span>
-				<div className="uwr-message-box uwr-message-box-hidden uwr-arrow-top-right uwr-message-box-type-no-message uwr-message-box-icon-none uwr-input-message-box-arrow" data-icon-type="none">
-					<div className="uwr-message-box-content"></div>
+				<span class="uwr-input-message uwr-input-no-message"></span>
+				<div class="uwr-message-box uwr-message-box-hidden uwr-arrow-top-right uwr-message-box-type-no-message uwr-message-box-icon-none uwr-input-message-box-arrow" data-icon-type="none">
+					<div class="uwr-message-box-content"></div>
 				</div>
 			</span>
 		);

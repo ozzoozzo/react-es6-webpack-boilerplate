@@ -77,7 +77,7 @@ class Form extends Component {
 		const { hintChange, colorChange, consoleLog, fields } = this.state;
 		const inputs = [];
 		Object.keys(fields).map((field, i) =>
-			inputs.push(<div key={i} className="gap"><Input name={field} value={fields[field]} onChange={this.handleInputFieldChange} hintChange={hintChange} colorChange={colorChange} consoleLog={consoleLog} /></div>)
+			inputs.push(<div key={i} class="gap"><Input name={field} value={fields[field]} onChange={this.handleInputFieldChange} hintChange={hintChange} colorChange={colorChange} consoleLog={consoleLog} /></div>)
         );
 		return inputs;
 	};
@@ -92,13 +92,13 @@ class Form extends Component {
 					<button onClick={this.doubleInputFields}>double number of input fields (inputFieldCount = {Object.keys(this.state.fields).length})</button>
 					<br />
 					<input id="toggle-hint-change" type="checkbox" checked={this.state.hintChange} onChange={this.toggleHintChange} />
-					<label htmlFor="toggle-hint-change">change hint when re-rendering is triggered</label>
+					<label for="toggle-hint-change">change hint when re-rendering is triggered</label>
 					<br />
 					<input id="toggle-color-change" type="checkbox" checked={this.state.colorChange} onChange={this.toggleColorChange} />
-					<label htmlFor="toggle-color-change">change border color when re-rendering is triggered</label>
+					<label for="toggle-color-change">change border color when re-rendering is triggered</label>
 					<br />
 					<input id="toggle-console-log" type="checkbox" checked={this.state.consoleLog} onChange={this.toggleConsoleLog} />
-					<label htmlFor="toggle-console-log">write infos to console.log</label>
+					<label for="toggle-console-log">write infos to console.log</label>
 					<br />
 					Test Setup: <strong>no</strong> hintChange, <strong>no</strong> colorChange, <strong>no</strong> consoleLog.
 					<br />

@@ -70,7 +70,7 @@ class Code extends PureComponent {
 		const inputClassName = value.length >= maxLength ? 'full' : null;
 		const inputValue = value.length >= maxLength ? value.replace(/(.)/g, '$1 ').trim() : value;
 		return (
-			<span className="code">
+			<span class="code">
 				<input
 					type="text"
 					className={inputClassName}

@@ -19,7 +19,7 @@ class Code2 extends PureComponent {
 	render() {
 		if (this.props.consoleLog) console.log('>>> Code2.render');
 		return (
-			<span className="code2">
+			<span class="code2">
 				<i>
 					<b /><b /><b /><b /><b />
 				</i>
