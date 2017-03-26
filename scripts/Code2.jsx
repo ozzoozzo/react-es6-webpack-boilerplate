@@ -30,7 +30,7 @@ class Code2 extends PureComponent {
 					maxLength={6}
 					autoComplete="off"
 				/>
-				<span class="tail" />
+				<u />
 				<i>
 					<b /><b /><b /><b /><b />
 				</i>
