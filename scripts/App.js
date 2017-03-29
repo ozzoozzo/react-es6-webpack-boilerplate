@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Code from './Code';
 import Code2 from './Code2';
 import Form from './Form';
+import InputNew from './InputNew';
 
 class App extends Component {
 
@@ -22,6 +23,12 @@ class App extends Component {
 				/>
 
 				<h1>Hello React</h1>
+
+				<h2>InputNew</h2>
+				<InputNew label="Label" name="input-a" required onChange={(name, value) => console.log('>>> InputNew >>> name =', name, '>>> value =', value)} />
+				<br /><br />
+				<InputNew label="Label" name="input-b" required warning="Nix gut" onChange={(name, value) => console.log('>>> InputNew >>> name =', name, '>>> value =', value)} />
+				<br /><br />
 
 				<h2>Code Input v2 (only use letter-spacing and hide cursor at right border)</h2>
 				<Code2 name="code-input-v2-1" consoleLog />

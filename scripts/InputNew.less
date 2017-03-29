@@ -1,0 +1,179 @@
+@default-width: 250px;
+
+.font(@size: 14px, @height: 18px, @color: #222222, @weight: normal) {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: @size;
+	line-height: @height;
+	color: @color;
+	font-weight: @weight;
+}
+
+.placeholder(@color) {
+    &::-webkit-input-placeholder {
+        color: @color;
+    }
+    &::-moz-placeholder {
+        color: @color;
+        opacity: 1;
+    }
+    &::-ms-input-placeholder {
+        color: @color;
+    }
+    &:-ms-input-placeholder {
+        color: @color;
+    }
+    &::placeholder {
+        color: @color;
+        opacity: 1;
+    }
+}
+
+.container {
+    position: relative;
+    display: inline-block;
+    background-color: #FFFFFF;
+    white-space: nowrap;
+
+    &.disabled {
+        background-color: #FCFCFC;
+    }
+
+    input {
+        position: relative;
+        width: @default-width;
+        height: 48px;
+        border: 1px solid #A1A1A1;
+        outline: none;
+        padding: 23px 9px 5px 9px;
+        background-color: transparent;
+        z-index: 1;
+        .font(16px, 20px);
+        .placeholder(#919191);
+
+        &:hover {
+            border: 1px solid #444444;
+        }
+
+        &:focus {
+            padding: 22px 8px 4px 8px;
+            border: 2px solid #009BD2;
+            .placeholder(#009BD2);
+
+            + label {
+                color: #009BD2;
+            }
+        }
+
+        &::-ms-clear {
+            display: none;
+        }
+
+        &:disabled {
+            border: 1px solid #EBEBEB;
+            color: #BEBEBE;
+            -ms-user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
+            .placeholder(#BEBEBE);
+
+            + label {
+                color: #BEBEBE;
+                cursor: default;
+
+                &.required::after {
+                    color: #BEBEBE;
+                }
+            }
+        }
+    }
+
+    &.warning input {
+        padding-right: 34px;
+        background-image: url(../images/warning-tip-16px.png);
+        background-size: 16px;
+        background-position: right 9px bottom 6px;
+        background-repeat: no-repeat;
+
+        &:focus {
+            padding-right: 33px;
+            background-position: right 8px bottom 5px;
+        }
+
+        &:not(:focus) {
+            border-color: #F4C964;
+
+            &:hover {
+                border-color: darken(#F4C964, 20%);
+            }
+        }
+    }
+
+    label {
+        position: absolute;
+        top: 24px;
+        left: 10px;
+        width: @default-width - 18;
+        -ms-user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+        .font(16px, 20px, #919191);
+        cursor: text;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transition-property: font-size, top, color;
+        transition-duration: .1s;
+        transition-timing-function: linear;
+
+        &.top {
+            top: 8px;
+            .font(12px, 14px, #919191);
+        }
+
+        &.required::after {
+            content: ' *';
+            color: #9A3D37;
+        }
+    }
+
+    &.warning label:not(.top) {
+        width: @default-width - 18 - 25;
+    }
+
+    ul {
+        position: relative;
+        width: @default-width;
+        margin: 10px 0 0 0;
+        padding: 10px 10px 8px 10px;
+        background-color: #FFF3D8;
+        list-style: none;
+        .font(12px, 15px);
+        white-space: normal;
+
+        li {
+            margin: 0;
+            padding: 0;
+        }
+
+        li + li {
+            padding-top: 3px;
+        }
+
+        &::after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            right: 6px;
+            width: 0;
+            height: 0;
+            margin: -9px 0 0 0;
+            padding: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            border-bottom-color: #FFF3D8;
+        }
+    }
+}

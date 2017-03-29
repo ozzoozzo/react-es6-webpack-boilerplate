@@ -69,14 +69,17 @@ module.exports = {
 	module: {
 		loaders: [{
 			test: /\.less$/,
-			loader: 'style!css!less'
+			loader: 'style-loader!css-loader!less-loader'
 		}, {
 			test: /\.jsx?$/,
-			loaders: ['babel'],
+			loaders: ['babel-loader'],
 			include: path.join(__dirname, 'scripts')
 		}, {
+			test: /\.(png|jpg|gif)$/,
+			loader: 'url-loader?limit=8192',
+		}, {
 			test: /\.(eot|svg|ttf|woff|woff2)$/,
-			loader: 'file'
+			loader: 'file-loader'
 		}]
 	}
 };
