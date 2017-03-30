@@ -35,7 +35,15 @@
 		letter-spacing: 21px;
 
 		&:hover {
-			border: 1px solid #444444;
+			border-color: #444444;
+
+			+ u {
+				border-color: #444444;
+			}
+
+			+ u + i b {
+				border-color: #444444;
+			}
 		}
 
 		&:focus {
@@ -81,7 +89,7 @@
 			display: inline-block;
 			width: 30px;
 			height: 7px;
-			border-left: 1px solid #CCCCCC;
+			border-left: 1px solid #A1A1A1;
 
 			&:nth-of-type(2n) {
 				height: 14px;
