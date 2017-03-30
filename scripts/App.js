@@ -2,6 +2,7 @@ require('./App.less');
 import React, { Component } from 'react';
 import Code from './Code';
 import Code2 from './Code2';
+import Code3 from './Code3';
 import Form from './Form';
 import InputNew from './InputNew';
 
@@ -24,8 +25,18 @@ class App extends Component {
 
 				<h1>Hello React</h1>
 
+				<h2>Code Input v3</h2>
+				<Code3 label="Label" name="code-input-v3-1" value="000000" consoleLog />
+				<br /><br />
+				<Code3 label="Activation code" name="code-input-v3-2" value="123456" required consoleLog />
+				<br /><br />
+				<div style={{ padding: '20px', backgroundColor: '#FFDCC0' }}>
+					<Code3 name="code-input-v3-3" containerBg="#FFDCC0" consoleLog />
+				</div>
+				<br /><br />
+
 				<h2>InputNew</h2>
-				<InputNew label="Label" name="input-a" required onChange={(name, value) => console.log('>>> InputNew >>> name =', name, '>>> value =', value)} />
+				<InputNew label="Label" name="input-a" value="123456" required onChange={(name, value) => console.log('>>> InputNew >>> name =', name, '>>> value =', value)} />
 				<br /><br />
 				<InputNew label="Label" name="input-b" required warning="Nix gut" onChange={(name, value) => console.log('>>> InputNew >>> name =', name, '>>> value =', value)} />
 				<br /><br />
@@ -38,13 +49,13 @@ class App extends Component {
 				<div style={{ padding: '20px', backgroundColor: '#FFDCC0' }}>
 					<Code2 name="code-input-v2-3" containerBg="#FFDCC0" consoleLog />
 				</div>
-
-				<br />
+				<br /><br />
 
 				<h2>Code Input v1 (switch from letter-spacing to word-spacing and insert spaces)</h2>
 				<Code name="code-input-v1-1" consoleLog />
 				<br /><br />
 				<Code name="code-input-v1-2" value="123" consoleLog />
+				<br /><br />
 
 				<Form />
 
