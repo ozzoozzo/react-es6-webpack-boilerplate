@@ -1,8 +1,8 @@
-require('./Form.less');
+require('./InputFields.less');
 import React, { Component } from 'react';
 import Input from './Input';
 
-class Form extends Component {
+class InputFields extends Component {
 
 	constructor(props) {
 		super(props);
@@ -25,7 +25,7 @@ class Form extends Component {
 	}
 
 	simulateHandleInput = () => {
-		if (this.state.consoleLog) console.log('>>> Form.simulateHandleInput');
+		if (this.state.consoleLog) console.log('>>> InputFields.simulateHandleInput');
 		this.setState({
 			fields: {
 				one: 'the',
@@ -63,12 +63,12 @@ class Form extends Component {
 		const fields = Object.assign({}, this.state.fields);
 		const now = new Date().getTime();
 		Object.keys(fields).map((field, i) => { fields[`${field}-${now}`] = fields[field]; });
-		if (this.state.consoleLog) console.log('>>> Form.doubleInputFields >>> numberOfInputFields =', Object.keys(fields).length);
+		if (this.state.consoleLog) console.log('>>> InputFields.doubleInputFields >>> numberOfInputFields =', Object.keys(fields).length);
 		this.setState({ fields });
 	};
 
 	handleInputFieldChange = (name, value) => {
-		if (this.state.consoleLog) console.log('>>> Form.handleInputFieldChange >>> name =', name, '>>> value =', value);
+		if (this.state.consoleLog) console.log('>>> InputFields.handleInputFieldChange >>> name =', name, '>>> value =', value);
         const fields = Object.assign({}, this.state.fields, { [name]: value });
 		this.setState({ fields });
 	};
@@ -85,7 +85,7 @@ class Form extends Component {
 	render() {
 		return (
 			<div>
-				<h2>Form</h2>
+				<h2>Input Field Test</h2>
 				<p>
 					<button onClick={this.simulateHandleInput}>simulate handleInput</button>
 					&nbsp;&nbsp;&nbsp;&nbsp;
@@ -115,4 +115,4 @@ class Form extends Component {
 
 }
 
-export default Form;
+export default InputFields;

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Code from './Code';
 import Code2 from './Code2';
 import Code3 from './Code3';
-import Form from './Form';
+import InputFields from './InputFields';
 import InputNew from './InputNew';
 
 class App extends Component {
@@ -57,7 +57,7 @@ class App extends Component {
 				<Code name="code-input-v1-2" value="123" consoleLog />
 				<br /><br />
 
-				<Form />
+				<InputFields />
 
 			</div>
 		);
