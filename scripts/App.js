@@ -12,6 +12,11 @@ class App extends Component {
 		this.nameInput.focus();
 	}
 
+	handleFormSubmit = (event) => {
+		alert('Form Submit');
+		event.preventDefault();
+	};
+
 	render() {
 		return (
 			// Add your component markup and other subcomponent references here.
@@ -26,14 +31,17 @@ class App extends Component {
 				<h1>Hello React</h1>
 
 				<h2>Code Input v3</h2>
-				<Code3 label="Label" name="code-input-v3-1" value="000000" consoleLog />
-				<br /><br />
-				<Code3 label="Activation code" name="code-input-v3-2" value="123456" required consoleLog />
-				<br /><br />
-				<div style={{ padding: '20px', backgroundColor: '#FFDCC0' }}>
-					<Code3 name="code-input-v3-3" containerBg="#FFDCC0" consoleLog />
-				</div>
-				<br /><br />
+				<form onSubmit={this.handleFormSubmit}>
+					<Code3 label="Label" name="code-input-v3-1" value="000000" consoleLog />
+					<br /><br />
+					<Code3 label="Activation code" name="code-input-v3-2" value="123456" required consoleLog />
+					<br /><br />
+					<div style={{ padding: '20px', backgroundColor: '#FFDCC0' }}>
+						<Code3 name="code-input-v3-3" containerBg="#FFDCC0" consoleLog />
+					</div>
+					<br /><br />
+					<input type="submit" value="Submit" />
+				</form>
 
 				<h2>InputNew</h2>
 				<InputNew label="Label" name="input-a" value="123456" required onChange={(name, value) => console.log('>>> InputNew >>> name =', name, '>>> value =', value)} />
