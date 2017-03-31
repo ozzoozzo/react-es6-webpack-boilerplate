@@ -18,6 +18,8 @@ class App extends Component {
 	};
 
 	render() {
+		const dummy = () => {};
+
 		return (
 			// Add your component markup and other subcomponent references here.
 			<div class="app">
@@ -27,8 +29,28 @@ class App extends Component {
 					placeholder="Focus is initially here!"
 					ref={(input) => { this.nameInput = input; }}
 				/>
+				&nbsp;
+				<input
+					type="text"
+					value="Input readonly"
+					readOnly
+				/>
+				&nbsp;
+				<input
+					type="text"
+					value="Input disabled"
+					disabled
+				/>
 
 				<h1>Hello React</h1>
+
+				<h2>InputNew readonly (CSS cf. e-b Login)</h2>
+				<InputNew label="First name" name="firstName" value="Peter (required, readonly)" required readOnly onChange={dummy} />
+				<br /><br />
+				<InputNew label="Last name" name="lastName" value="Muster (required, disabled)" required disabled onChange={dummy} />
+				<br /><br />
+				<InputNew label="E-mail address" name="email" value="" required onChange={dummy} />
+				<br /><br /><br />
 
 				<h2>Code Input v3</h2>
 				<form onSubmit={this.handleFormSubmit}>
@@ -42,12 +64,13 @@ class App extends Component {
 					<br /><br />
 					<input type="submit" value="Submit" />
 				</form>
+				<br /><br /><br />
 
 				<h2>InputNew</h2>
 				<InputNew label="Label" name="input-a" value="123456" required onChange={(name, value) => console.log('>>> InputNew >>> name =', name, '>>> value =', value)} />
 				<br /><br />
 				<InputNew label="Label" name="input-b" required warning="Nix gut" onChange={(name, value) => console.log('>>> InputNew >>> name =', name, '>>> value =', value)} />
-				<br /><br />
+				<br /><br /><br />
 
 				<h2>Code Input v2 (only use letter-spacing and hide cursor at right border)</h2>
 				<Code2 name="code-input-v2-1" consoleLog />
@@ -57,13 +80,13 @@ class App extends Component {
 				<div style={{ padding: '20px', backgroundColor: '#FFDCC0' }}>
 					<Code2 name="code-input-v2-3" containerBg="#FFDCC0" consoleLog />
 				</div>
-				<br /><br />
+				<br /><br /><br />
 
 				<h2>Code Input v1 (switch from letter-spacing to word-spacing and insert spaces)</h2>
 				<Code name="code-input-v1-1" consoleLog />
 				<br /><br />
 				<Code name="code-input-v1-2" value="123" consoleLog />
-				<br /><br />
+				<br /><br /><br />
 
 				<InputFields />
 

@@ -32,9 +32,9 @@ class InputNew extends PureComponent {
 	}
 
 	render() {
-		const { name, placeholder, label, required, disabled, maxLength, width, warning } = this.props;
+		const { name, placeholder, label, required, readOnly, disabled, maxLength, width, warning } = this.props;
 		const { value } = this.state;
-		const containerClassName = `container ${disabled ? 'disabled' : ''} ${warning ? 'warning' : ''}`;
+		const containerClassName = `container ${readOnly || disabled ? 'disabled' : ''} ${warning ? 'warning' : ''}`;
 		const labelClassName = `${value || placeholder ? 'top' : ''} ${required ? 'required' : ''}`;
 		const inputWidthStyle = width ? { width: width + 'px' } : {};
 		const labelWidthStyle = width ? { width: (width - 18 - (warning && !(value || placeholder) ? 25 : 0)) + 'px' } : {};
@@ -45,7 +45,8 @@ class InputNew extends PureComponent {
 					name={name}
 					placeholder={placeholder}
 					value={value}
-					disabled={disabled}
+					readOnly={readOnly}
+					disabled={readOnly || disabled}
 					maxLength={maxLength}
 					style={inputWidthStyle}
 					onChange={this.handleChange}
@@ -63,6 +64,7 @@ InputNew.propTypes = {
 	placeholder: PropTypes.string,
 	value: PropTypes.string,
 	required: PropTypes.bool,
+	readonly: PropTypes.bool,
 	disabled: PropTypes.bool,
 	maxLength: PropTypes.number,
 	width: PropTypes.number,
