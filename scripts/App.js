@@ -5,6 +5,7 @@ import Code2 from './Code2';
 import Code3 from './Code3';
 import InputFields from './InputFields';
 import InputNew from './InputNew';
+import InputDropdown from './InputDropdown';
 
 class App extends Component {
 
@@ -19,30 +20,67 @@ class App extends Component {
 
 	render() {
 		const dummy = () => {};
+		const options = [
+			'hansi@domain.com',
+			'greti.das.geht.immer.weiter@bla.ohne.ende.ch',
+			'hugo@bli.at',
+			'berta@blu.fr',
+		];
 
 		return (
 			// Add your component markup and other subcomponent references here.
 			<div class="app">
 
-				<input
-					type="text"
-					placeholder="Focus is initially here!"
-					ref={(input) => { this.nameInput = input; }}
-				/>
+				<input type="text" placeholder="Focus is initially here!" ref={(input) => { this.nameInput = input; }} />
 				&nbsp;
-				<input
-					type="text"
-					value="Input readonly"
-					readOnly
-				/>
+				<input type="text" value="Value" onChange={dummy} />
 				&nbsp;
-				<input
-					type="text"
-					value="Input disabled"
-					disabled
-				/>
+				<input type="text" value="Input readonly" readOnly />
+				&nbsp;
+				<input type="text" value="Input disabled" disabled/>
+				&nbsp;
+				<select name="dropdown-1" defaultValue="hugo" style={{ width: '150px' }}>
+					<option value="hansi">hansi@domain.com</option>
+					<option value="greti">greti.das.geht.immer.weiter@bla.ohne.ende.ch</option>
+					<option value="hugo">hugo@bli.at</option>
+					<option value="berta">berta@blu.fr</option>
+				</select>
 
 				<h1>Hello React</h1>
+
+				<h2>InputDropdown</h2>
+				<InputDropdown label="First name" name="idd-1" onChange={dummy} options={options} />
+				<br />
+				label
+				<br />
+				very long label with ... ellipsis
+				<br />
+				placeholder
+				<br />
+				very long placeholder with ... ellipsis
+				<br />
+				value (pre-selection)
+				<br />
+				very long value with ... ellipsis
+				<br />
+				required
+				<br />
+				readonly
+				<br />
+				disabled
+				<br />
+				width &lt; 250px
+				<br />
+				width &gt; 250px
+				<br />
+				warning
+				<br />
+				model mit 0 options (dann kein arrow-icon)
+				<br />
+				model mit genau 1 option, model mit n options
+				<br />
+				option with long text ... ellipsis
+				<br /><br />
 
 				<h2>InputNew readonly (CSS cf. e-b Login)</h2>
 				<InputNew label="First name" name="firstName" value="Peter (required, readonly)" required readOnly onChange={dummy} />

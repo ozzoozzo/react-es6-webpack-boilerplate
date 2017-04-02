@@ -28,7 +28,7 @@
 	}
 }
 
-.container {
+.idd-container {
 	position: relative;
 	display: inline-block;
 	background-color: #FFFFFF;
@@ -44,19 +44,23 @@
 		height: 48px;
 		border: 1px solid #A1A1A1;
 		outline: none;
-		padding: 23px 9px 5px 9px;
+		padding: 23px 34px 5px 9px;
 		background-color: transparent;
+		background-image: url(../images/dropdown-arrow-down-16px.png);
+		background-size: 16px;
+		background-position: right 9px bottom 6px;
+		background-repeat: no-repeat;
 		.font(16px, 20px);
 		.placeholder(#919191);
-		z-index: 1;
+		z-index: 3;
 
 		&:hover {
 			border: 1px solid #444444;
 		}
 
 		&:focus {
-			border: 2px solid #009BD2;
-			padding: 22px 8px 4px 8px;
+			border-color: transparent;
+			background-image: url(../images/dropdown-arrow-up-16px.png);
 			.placeholder(#009BD2);
 
 			+ label {
@@ -87,7 +91,6 @@
 			}
 		}
 
-		/* works for Chrome, Firefox, IE, Edge */
 		&[readonly] {
 			color: #222222;
 
@@ -99,33 +102,13 @@
 				}
 			}
 		}
-
-		/* works for Firefox only */
-		/*
-		&:-moz-read-only {
-			color: #222222;
-		}
-		*/
-
-		/* works for Chrome, Edge - does NOT work for Firefox, IE */
-		/*
-		&:read-only {
-			color: #222222;
-		}
-		*/
 	}
 
 	&.warning input {
-		padding-right: 34px;
 		background-image: url(../images/warning-tip-16px.png);
 		background-size: 16px;
 		background-position: right 9px bottom 6px;
 		background-repeat: no-repeat;
-
-		&:focus {
-			padding-right: 33px;
-			background-position: right 8px bottom 5px;
-		}
 
 		&:not(:focus) {
 			border-color: #F4C964;
@@ -152,6 +135,11 @@
 		transition-property: font-size, top, color;
 		transition-duration: .1s;
 		transition-timing-function: linear;
+		z-index: 2;
+
+		&:not(.top) {
+			width: @default-width - 18 - 25;
+		}
 
 		&.top {
 			top: 8px;
@@ -168,7 +156,45 @@
 		width: @default-width - 18 - 25;
 	}
 
-	ul {
+	/*
+	input:not(:focus) + label + ul.options {
+		display: none;
+	}
+	*/
+	ul.options:not(.open) {
+		display: none;
+	}
+
+	ul.options {
+		position: absolute;
+		top: 0;
+		left: -4px;
+		right: -4px;
+		/* width: @default-width; */
+		margin: 0;
+		padding: 57px 4px 4px 4px;
+		background-color: #FFFFFF;
+		list-style: none;
+		.font(16px, 48px);
+		/* white-space: normal; */
+		box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2);
+		z-index: 1;
+
+		li {
+			margin: 0;
+			padding: 0 10px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			cursor: default;
+			z-index: 3;
+
+			&:hover {
+				background-color: #E5E5E5;
+			}
+		}
+	}
+
+	ul.warning {
 		position: relative;
 		width: @default-width;
 		margin: 10px 0 0 0;
