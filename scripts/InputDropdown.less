@@ -167,7 +167,7 @@
 		right: -4px;
 		/* width: @default-width; */
 		margin: 0;
-		padding: 57px 4px 4px 4px;
+		padding: 52px 4px 4px 4px;
 		background-color: #FFFFFF;
 		list-style: none;
 		.font(16px, 48px);
@@ -192,6 +192,17 @@
 			&.highlight {
 				background-color: #E5E5E5;
 			}
+		}
+
+		&::after {
+			content: '';
+			position: absolute;
+			top: 47px;
+			left: 4px;
+			right: 4px;
+			height: 1px;
+			/* background-color: lighten(#A1A1A1, 20%); */
+			background-color: #E5E5E5;
 		}
 	}
 
