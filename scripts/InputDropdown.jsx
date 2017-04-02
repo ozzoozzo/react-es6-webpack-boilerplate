@@ -59,7 +59,7 @@ class InputDropdown extends PureComponent {
 		}, this.consoleState);
 	};
 
-	handleFocus = (event) => {
+	handleFocus = () => {
 		console.log('>>> handleFocus');
 		/*
 		// see -> https://facebook.github.io/react/docs/events.html
