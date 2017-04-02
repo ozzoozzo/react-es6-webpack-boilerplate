@@ -90,15 +90,6 @@
 		border-color: #444444;
 	}
 
-	&.open input {
-		border-color: transparent;
-		.placeholder(#009BD2);
-
-		+ label {
-			color: #009BD2;
-		}
-	}
-
 	&.warning input {
 		background-image: url(../images/warning-tip-16px.png);
 		background-size: 16px;
@@ -165,10 +156,6 @@
 		z-index: 4;
 	}
 
-	&.open .arrow {
-		background-image: url(../images/dropdown-arrow-up-16px.png);
-	}
-
 	&:not(.open) ul.options {
 		display: none;
 	}
@@ -196,7 +183,13 @@
 			cursor: default;
 			z-index: 3;
 
+			/*
 			&:hover {
+				background-color: #E5E5E5;
+			}
+			*/
+
+			&.highlight {
 				background-color: #E5E5E5;
 			}
 		}
@@ -235,6 +228,23 @@
 			border-bottom: 12px solid transparent;
 			border-bottom-color: #FFF3D8;
 			padding: 0;
+		}
+	}
+
+	&.open {
+		z-index: 5;
+
+		input {
+			border-color: transparent;
+			.placeholder(#009BD2);
+
+			+ label {
+				color: #009BD2;
+			}
+		}
+
+		.arrow {
+			background-image: url(../images/dropdown-arrow-up-16px.png);
 		}
 	}
 }

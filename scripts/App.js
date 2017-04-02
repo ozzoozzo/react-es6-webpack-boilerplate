@@ -49,8 +49,21 @@ class App extends Component {
 				<h1>Hello React</h1>
 
 				<h2>InputDropdown</h2>
-				<InputDropdown label="E-mail address" name="idd-1" onChange={dummy} options={options} />
-				<br />
+				<InputDropdown
+					label="E-mail address"
+					name="idd-1"
+					onChange={dummy}
+					options={options}
+				/>
+				<br /><br />
+				<InputDropdown
+					label="E-mail address"
+					name="idd-1"
+					onChange={dummy}
+					options={options}
+					value="hugo@bli.at"
+				/>
+				<br /><br />
 				label
 				<br />
 				very long label with ... ellipsis
