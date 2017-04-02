@@ -48,8 +48,7 @@ class InputDropdown extends PureComponent {
 		if (highlight === -1) return;
 		this.setState({
 			value: options[highlight],
-		}, this.consoleState);
-		this.refs.input.blur();
+		}, () => this.refs.input.blur());
 	};
 
 	handleChange = (event) => {
@@ -60,8 +59,15 @@ class InputDropdown extends PureComponent {
 		}, this.consoleState);
 	};
 
-	handleFocus = () => {
+	handleFocus = (event) => {
 		console.log('>>> handleFocus');
+		/*
+		// see -> https://facebook.github.io/react/docs/events.html
+		event.preventDefault();
+		event.stopPropagation();
+		event.nativeEvent.preventDefault();
+		event.nativeEvent.stopPropagation();
+		*/
 		this.setState({
 			open: true,
 		}, this.consoleState);
