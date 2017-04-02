@@ -1,5 +1,6 @@
 require('./InputDropdown.less');
 import React, { PureComponent, PropTypes } from 'react';
+// import ReactDOM from 'react-dom';
 
 class InputDropdown extends PureComponent {
 
@@ -13,6 +14,19 @@ class InputDropdown extends PureComponent {
 			open: false,
 		};
 	}
+
+//	componentDidMount() {
+//		// source -> https://medium.com/@ericclemmons/react-event-preventdefault-78c28c950e46
+//		this.node = ReactDOM.findDOMNode(this.refs.input);
+//		const addEvent = this.node.addEventListener || this.node.attachEvent;
+//		addEvent('keydown', this.handleKey, false);
+//	}
+//
+//	componentWillUnmount() {
+//		// source -> https://medium.com/@ericclemmons/react-event-preventdefault-78c28c950e46
+//		const removeEvent = this.node.removeEventListener || this.node.detachEvent;
+//		removeEvent('keydown', this.handleKey);
+//	}
 
 	handleChange = (event) => {
 		console.log('>>> handleChange >>> value =', event.target.value);
@@ -38,6 +52,33 @@ class InputDropdown extends PureComponent {
 		}
 	};
 
+	handleKey = (event) => {
+		console.log('>>> handleKey >>> event.key =', event.key);
+		switch (event.key) {
+			case 'Enter':
+				console.log('ENTER');
+				event.preventDefault();
+				event.stopPropagation();
+				break;
+			case 'ArrowUp':
+				console.log('ARROW UP');
+				event.preventDefault();
+				event.stopPropagation();
+				this.setState({
+					value: 'up@up.com',
+				});
+				break;
+			case 'ArrowDown':
+				console.log('ARROW DOWN');
+				event.preventDefault();
+				event.stopPropagation();
+				this.setState({
+					value: 'down@down.com',
+				});
+				break;
+		}
+	};
+
 	handleArrowMouseDown = () => {
 		console.log('>>> handleArrowMouseDown');
 		this.closeOnArrowClick = this.state.open;
@@ -51,7 +92,7 @@ class InputDropdown extends PureComponent {
 				open: false,
 			});
 		} else {
-			this.input.focus();
+			this.refs.input.focus();
 		}
 	};
 
@@ -108,7 +149,7 @@ class InputDropdown extends PureComponent {
 		return (
 			<span class={containerClassName}>
 				<input
-					ref={(input) => { this.input = input; }}
+					ref="input"
 					type="text"
 					name={name}
 					placeholder={placeholder}
@@ -119,7 +160,8 @@ class InputDropdown extends PureComponent {
 					style={inputWidthStyle}
 					onChange={this.handleChange}
 					onFocus={this.handleFocus}
-					onBlur={this.handleBlur} />
+					onBlur={this.handleBlur}
+					onKeyDown={this.handleKey} />
 				<label class={labelClassName} style={labelWidthStyle}>{label}</label>
 				{this.renderArrow(options)}
 				{this.renderOptions(options, width)}
