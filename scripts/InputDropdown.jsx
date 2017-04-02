@@ -13,7 +13,11 @@ class InputDropdown extends PureComponent {
 			open: false,
 		};
 		this.state.highlight = this.getHighlightIndex();
-		console.log('state =', this.state);
+		this.consoleState();
+	}
+
+	consoleState() {
+		console.log('state =', this.state, 'closeOnArrowClick =', this.closeOnArrowClick, 'mouseDownOnOption =', this.mouseDownOnOption);
 	}
 
 	getHighlightIndex = (value = this.state.value, options = this.props.options) => {
@@ -26,7 +30,7 @@ class InputDropdown extends PureComponent {
 		const highlight = this.state.highlight + 1;
 		this.setState({
 			highlight,
-		});
+		}, this.consoleState);
 	};
 
 	decreaseHighlightIndex = () => {
@@ -35,7 +39,7 @@ class InputDropdown extends PureComponent {
 		const highlight = this.state.highlight === -1 ? options.length - 1 : this.state.highlight - 1;
 		this.setState({
 			highlight,
-		});
+		}, this.consoleState);
 	};
 
 	selectHighlightedOption = () => {
@@ -44,7 +48,7 @@ class InputDropdown extends PureComponent {
 		if (highlight === -1) return;
 		this.setState({
 			value: options[highlight],
-		});
+		}, this.consoleState);
 		this.refs.input.blur();
 	};
 
@@ -53,24 +57,24 @@ class InputDropdown extends PureComponent {
 		this.setState({
 			value: event.target.value,
 			highlight: this.getHighlightIndex(event.target.value),
-		});
+		}, this.consoleState);
 	};
 
 	handleFocus = () => {
 		console.log('>>> handleFocus');
 		this.setState({
 			open: true,
-		});
+		}, this.consoleState);
 	};
 
 	handleBlur = (event) => {
-		const { onChange } = this.props;
 		console.log('>>> handleBlur');
+		const { onChange } = this.props;
 		if (!this.closeOnArrowClick && !this.mouseDownOnOption) {
 			this.setState({
 				open: false,
 				highlight: this.getHighlightIndex(),
-			});
+			}, this.consoleState);
 			onChange(event.target.name, event.target.value);
 		}
 	};
@@ -94,7 +98,6 @@ class InputDropdown extends PureComponent {
 				this.decreaseHighlightIndex();
 				break;
 			case 'Enter':
-				console.log('ENTER');
 				event.preventDefault();
 				event.stopPropagation();
 				this.selectHighlightedOption();
@@ -105,6 +108,7 @@ class InputDropdown extends PureComponent {
 	handleArrowMouseDown = () => {
 		console.log('>>> handleArrowMouseDown');
 		this.closeOnArrowClick = this.state.open;
+		this.consoleState();
 	};
 
 	handleArrowClick = () => {
@@ -113,7 +117,7 @@ class InputDropdown extends PureComponent {
 			this.closeOnArrowClick = false;
 			this.setState({
 				open: false,
-			});
+			}, this.consoleState);
 		} else {
 			this.refs.input.focus();
 		}
@@ -122,6 +126,7 @@ class InputDropdown extends PureComponent {
 	handleOptionMouseDown = () => {
 		console.log('>>> handleOptionMouseDown');
 		this.mouseDownOnOption = true;
+		this.consoleState();
 	};
 
 	handleOptionClick = (value) => {
@@ -131,7 +136,7 @@ class InputDropdown extends PureComponent {
 			value,
 			open: false,
 			highlight: this.getHighlightIndex(value),
-		});
+		}, this.consoleState);
 	};
 
 	renderArrow(options) {
@@ -193,6 +198,7 @@ class InputDropdown extends PureComponent {
 			</span>
 		);
 	}
+
 }
 
 InputDropdown.propTypes = {

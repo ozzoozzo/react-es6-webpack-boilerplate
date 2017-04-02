@@ -56,6 +56,7 @@ class InputNew extends PureComponent {
 			</span>
 		);
 	}
+
 }
 
 InputNew.propTypes = {
