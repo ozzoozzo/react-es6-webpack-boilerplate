@@ -46,27 +46,9 @@
 		outline: none;
 		padding: 23px 34px 5px 9px;
 		background-color: transparent;
-		background-image: url(../images/dropdown-arrow-down-16px.png);
-		background-size: 16px;
-		background-position: right 9px bottom 6px;
-		background-repeat: no-repeat;
 		.font(16px, 20px);
 		.placeholder(#919191);
 		z-index: 3;
-
-		&:hover {
-			border: 1px solid #444444;
-		}
-
-		&:focus {
-			border-color: transparent;
-			background-image: url(../images/dropdown-arrow-up-16px.png);
-			.placeholder(#009BD2);
-
-			+ label {
-				color: #009BD2;
-			}
-		}
 
 		&::-ms-clear {
 			display: none;
@@ -104,6 +86,19 @@
 		}
 	}
 
+	&:hover input {
+		border-color: #444444;
+	}
+
+	&.open input {
+		border-color: transparent;
+		.placeholder(#009BD2);
+
+		+ label {
+			color: #009BD2;
+		}
+	}
+
 	&.warning input {
 		background-image: url(../images/warning-tip-16px.png);
 		background-size: 16px;
@@ -112,11 +107,11 @@
 
 		&:not(:focus) {
 			border-color: #F4C964;
-
-			&:hover {
-				border-color: darken(#F4C964, 20%);
-			}
 		}
+	}
+
+	&.warning:hover input:not(:focus) {
+		border-color: darken(#F4C964, 20%);
 	}
 
 	label {
@@ -156,12 +151,25 @@
 		width: @default-width - 18 - 25;
 	}
 
-	/*
-	input:not(:focus) + label + ul.options {
-		display: none;
+	.arrow {
+		display: inline-block;
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 34px;
+		height: 48px;
+		background-image: url(../images/dropdown-arrow-down-16px.png);
+		background-size: 16px;
+		background-position: right 10px bottom 7px;
+		background-repeat: no-repeat;
+		z-index: 4;
 	}
-	*/
-	ul.options:not(.open) {
+
+	&.open .arrow {
+		background-image: url(../images/dropdown-arrow-up-16px.png);
+	}
+
+	&:not(.open) ul.options {
 		display: none;
 	}
 

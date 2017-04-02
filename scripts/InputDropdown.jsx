@@ -3,16 +3,11 @@ import React, { PureComponent, PropTypes } from 'react';
 
 class InputDropdown extends PureComponent {
 
-/*
-http://furqanzafar.github.io/react-selectize/#/?category=simple&example=custom-option-and-value-rendering
-https://react.rocks/tag/Dropdown
-http://jedwatson.github.io/react-select/
-*/
-
 	constructor(props) {
 		super(props);
 		console.log('>>> constructor');
-		this.mouseDown = false;
+		this.closeOnArrowClick = false;
+		this.mouseDownOnOption = false;
 		this.state = {
 			value: props.value || '',
 			open: false,
@@ -35,36 +30,58 @@ http://jedwatson.github.io/react-select/
 
 	handleBlur = (event) => {
 		console.log('>>> handleBlur');
-		if (!this.mouseDown) {
+		if (!this.closeOnArrowClick && !this.mouseDownOnOption) {
 			this.setState({
 				open: false,
 			});
+			this.props.onChange(event.target.name, event.target.value);
 		}
-		this.props.onChange(event.target.name, event.target.value);
 	};
 
-	handleMouseDown = () => {
-		console.log('>>> handleMouseDown');
-		this.mouseDown = true;
+	handleArrowMouseDown = () => {
+		console.log('>>> handleArrowMouseDown');
+		this.closeOnArrowClick = this.state.open;
 	};
 
-	handleClick = (option) => {
-		console.log('>>> handleClick >>> option = ', option);
-		//this.input.blur();
-		this.mouseDown = false;
+	handleArrowClick = () => {
+		console.log('>>> handleArrowClick');
+		if (this.closeOnArrowClick) {
+			this.closeOnArrowClick = false;
+			this.setState({
+				open: false,
+			});
+		} else {
+			this.input.focus();
+		}
+	};
+
+	handleOptionMouseDown = () => {
+		console.log('>>> handleOptionMouseDown');
+		this.mouseDownOnOption = true;
+	};
+
+	handleOptionClick = (value) => {
+		console.log('>>> handleOptionClick >>> value = ', value);
+		this.mouseDownOnOption = false;
 		this.setState({
-			value: option,
+			value,
 			open: false,
 		});
 	};
 
-	renderOptions(options, open, width) {
-		if (!options) return null;
-		const optionsClassName = `options ${open ? 'open' : ''}`;
+	renderArrow(options) {
+		if (!options || !options.length) return null;
+		return (
+			<span class="arrow" onMouseDown={this.handleArrowMouseDown} onClick={this.handleArrowClick} />
+		);
+	}
+
+	renderOptions(options, width) {
+		if (!options || !options.length) return null;
 		const optionsWidthStyle = width ? { width: width + 'px' } : {};
 		return (
-			<ul class={optionsClassName} style={optionsWidthStyle} onMouseDown={this.handleMouseDown}>
-				{options.map((option, index) => <li key={index} onClick={() => { this.handleClick(option); }}>{option}</li>)}
+			<ul class="options" style={optionsWidthStyle} onMouseDown={this.handleOptionMouseDown}>
+				{options.map((value, index) => <li key={index} onClick={() => { this.handleOptionClick(value); }}>{value}</li>)}
 			</ul>
 		);
 	}
@@ -84,7 +101,7 @@ http://jedwatson.github.io/react-select/
 		console.log('>>> render');
 		const { name, placeholder, label, required, readOnly, disabled, maxLength, width, warning, options } = this.props;
 		const { value, open } = this.state;
-		const containerClassName = `idd-container ${readOnly || disabled ? 'disabled' : ''} ${warning ? 'warning' : ''}`;
+		const containerClassName = `idd-container ${open ? 'open' : ''} ${readOnly || disabled ? 'disabled' : ''} ${warning ? 'warning' : ''}`;
 		const labelClassName = `${value || placeholder ? 'top' : ''} ${required ? 'required' : ''}`;
 		const inputWidthStyle = width ? { width: width + 'px' } : {};
 		const labelWidthStyle = width ? { width: (width - 18 - (!(value || placeholder) ? 25 : 0)) + 'px' } : {};
@@ -104,7 +121,8 @@ http://jedwatson.github.io/react-select/
 					onFocus={this.handleFocus}
 					onBlur={this.handleBlur} />
 				<label class={labelClassName} style={labelWidthStyle}>{label}</label>
-				{this.renderOptions(options, open, width)}
+				{this.renderArrow(options)}
+				{this.renderOptions(options, width)}
 				{this.renderWarningMsg(warning, width)}
 			</span>
 		);

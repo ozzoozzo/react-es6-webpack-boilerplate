@@ -49,7 +49,7 @@ class App extends Component {
 				<h1>Hello React</h1>
 
 				<h2>InputDropdown</h2>
-				<InputDropdown label="First name" name="idd-1" onChange={dummy} options={options} />
+				<InputDropdown label="E-mail address" name="idd-1" onChange={dummy} options={options} />
 				<br />
 				label
 				<br />
