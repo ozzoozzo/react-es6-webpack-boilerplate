@@ -1,6 +1,5 @@
 require('./InputDropdown.less');
 import React, { PureComponent, PropTypes } from 'react';
-// import ReactDOM from 'react-dom';
 
 class InputDropdown extends PureComponent {
 
@@ -14,19 +13,6 @@ class InputDropdown extends PureComponent {
 			open: false,
 		};
 	}
-
-//	componentDidMount() {
-//		// source -> https://medium.com/@ericclemmons/react-event-preventdefault-78c28c950e46
-//		this.node = ReactDOM.findDOMNode(this.refs.input);
-//		const addEvent = this.node.addEventListener || this.node.attachEvent;
-//		addEvent('keydown', this.handleKey, false);
-//	}
-//
-//	componentWillUnmount() {
-//		// source -> https://medium.com/@ericclemmons/react-event-preventdefault-78c28c950e46
-//		const removeEvent = this.node.removeEventListener || this.node.detachEvent;
-//		removeEvent('keydown', this.handleKey);
-//	}
 
 	handleChange = (event) => {
 		console.log('>>> handleChange >>> value =', event.target.value);
