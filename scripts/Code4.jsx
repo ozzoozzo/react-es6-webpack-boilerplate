@@ -115,9 +115,8 @@ return;
 
 	render() {
 		if (this.props.consoleLog) console.log('>>> Code4.render');
-		const { name, label, required, containerBg } = this.props;
+		const { name, label, required } = this.props;
 		const { value } = this.state;
-		const containerBgStyle = containerBg ? { backgroundColor: containerBg } : null;
 		const labelClassName = required ? 'required' : null;
 		return (
 			<span class="code4">
@@ -136,7 +135,6 @@ return;
 					maxLength={11}
 					autoComplete="off"
 				/>
-				<u style={containerBgStyle} />
 				<i>
 					<b /><b /><b /><b /><b />
 				</i>

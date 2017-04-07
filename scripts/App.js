@@ -112,7 +112,7 @@ class App extends Component {
 					<Code4 label="Activation code" name="code-input-v4-2" value="123456" required consoleLog onChange={dump} />
 					<br /><br />
 					<div style={{ padding: '20px', backgroundColor: '#FFDCC0' }}>
-						<Code4 name="code-input-v4-3" containerBg="#FFDCC0" consoleLog onChange={dump} />
+						<Code4 label="Label - Lorem ipsum dolor sit amet, consetetur sadipscing elitr." name="code-input-v4-3" consoleLog onChange={dump} />
 					</div>
 					<br /><br />
 					<input type="submit" value="Submit" />

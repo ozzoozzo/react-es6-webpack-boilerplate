@@ -5,7 +5,7 @@
 	font-style: normal;
 }
 
-@width: 192px;
+@width: 174px;
 @height: 48px;
 
 .font(@size: 14px, @height: 18px, @color: #222222, @weight: normal) {
@@ -20,6 +20,7 @@
 	display: inline-block;
 	position: relative;
 	background-color: #FFFFFF;
+	white-space: nowrap;
 
 	input {
 		position: relative;
@@ -32,16 +33,12 @@
 		z-index: 1;
 		/* font: 14px/20px 'droid_sans_monoregular',sans-serif; */
 		.font(16px, 20px);
-		word-spacing: 16px;
+		word-spacing: 15px;
 
 		&:hover {
 			border-color: #444444;
 
-			+ u {
-				border-color: #444444;
-			}
-
-			+ u + i b {
+			+ i b {
 				border-color: #444444;
 			}
 		}
@@ -50,15 +47,11 @@
 			padding: 22px 0 4px 8px;
 			border: 2px solid #009BD2;
 
-			+ u {
-				border-left: 2px solid #009BD2;
-			}
-
-			+ u + i b {
+			+ i b {
 				border-color: #009BD2;
 			}
 
-			+ u + i + label {
+			+ i + label {
 				color: #009BD2;
 			}
 		}
@@ -68,26 +61,14 @@
 		}
 	}
 
-	u {
-		display: inline-block;
-		position: absolute;
-		top: 0;
-		right: 0;
-		width: 12px;
-		height: @height;
-		border-left: 1px solid #A1A1A1;
-		background-color: #FFFFFF;
-		z-index: 2;
-	}
-
 	i {
 		position: absolute;
 		bottom: 0;
-		left: 29px;
+		left: 28px;
 
 		b {
 			display: inline-block;
-			width: 30px;
+			width: 28.5px;
 			height: 7px;
 			border-left: 1px solid #A1A1A1;
 
