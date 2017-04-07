@@ -3,13 +3,27 @@ import React, { PureComponent } from 'react';
 
 class Code4 extends PureComponent {
 
+/*
+	current development state:
+	- keys 'Home', 'End' -> work correctly -> no special handling needed!
+	- keys 'PageUp', 'PageDown' -> work correctly -> no special handling needed!
+	- keys 'Backspace', 'Delete' -> work correctly -> handling implemented in handleChange
+
+	TODO:
+	- cursor keys -> position of caret needs to be adjusted
+	- focus and click -> position of caret needs to be adjusted
+	- copy/paste with keys (Ctrl C, Ctrl X, Ctrl V) -> needs to be handled
+	- copy/paste with mouse (right click -> copy/cut/paste) -> needs to be handled
+	- Enter key -> check/handle?
+*/
+
 	constructor(props) {
 		super(props);
 		let value = props.value || '';
 		value = value.replace(/\D/g, '').replace(/(\d)/g, '$1 ').trim();
-		this.state = {
-			value,
-		};
+		this.state = { value };
+		this.key = undefined;
+		this.pos = undefined;
 	}
 
 	handleFocus = (event) => {
@@ -31,7 +45,9 @@ return;
 
 	handleKeyDown = (event) => {
 		// not needed -> FIXME: remove this function!
-		if (this.props.consoleLog) console.log('>>> Code4.handleKeyDown >>> value ="' + event.target.value + '" >>> key =', event.key);
+		this.key = event.key;
+		this.pos = this.refs.input.selectionEnd;
+		if (this.props.consoleLog) console.log('>>> Code4.handleKeyDown >>> value ="' + event.target.value + '" >>> key =', this.key, '>>> pos =', this.pos);
 	};
 
 	handleKeyPress = (event) => {
@@ -56,7 +72,7 @@ return;
 			case 'Enter': // fall through
 			case 'Insert': // fall through
 			case 'Backspace': // fall through
-			case 'Del':
+			case 'Delete':
 				break;
 			default:
 				if (event.key.match(/\d/) === null) {
@@ -70,12 +86,24 @@ return;
 	};
 
 	handleChange = (event) => {
-		if (this.props.consoleLog) console.log('>>> Code4.handleChange >>> user value ="' + event.target.value + '"');
 		let value = event.target.value;
+		if (this.props.consoleLog) console.log('>>> Code4.handleChange >>> user value ="' + value + '" >>> key =', this.key);
+
+		if (this.key === 'Backspace') {
+			console.log('Backspace')
+			value = value.replace(/\d$/, '');
+		} else if (this.key === 'Delete') {
+			console.log('Delete');
+			value = value.replace(/(\d)\d/, '$1');
+		}
+
 		value = value.replace(/\D/g, '').replace(/(\d)/g, '$1 ');
-		if (value.length > 11 || event.key === 'Backspace') value = value.trim();
+		if (value.length > 11) value = value.trim();
+
 		if (this.props.consoleLog) console.log('>>> Code4.handleChange >>> modified value ="' + value + '"');
 		this.setState({ value });
+		this.key = undefined;
+        this.pos = undefined;
 	};
 
 	handleBlur = (event) => {
