@@ -8,9 +8,9 @@ class Code4 extends PureComponent {
 	- keys 'Home', 'End' -> work correctly -> no special handling needed!
 	- keys 'PageUp', 'PageDown' -> work correctly -> no special handling needed!
 	- keys 'Backspace', 'Delete' -> work correctly -> handling implemented in handleChange
+	- cursor keys -> position of caret needs to be adjusted
 
 	TODO:
-	- cursor keys -> position of caret needs to be adjusted
 	- focus and click -> position of caret needs to be adjusted
 	- copy/paste with keys (Ctrl C, Ctrl X, Ctrl V) -> needs to be handled
 	- copy/paste with mouse (right click -> copy/cut/paste) -> needs to be handled
@@ -25,7 +25,7 @@ class Code4 extends PureComponent {
 		value = value.replace(/\D/g, '').replace(/(\d)/g, '$1 ').trim();
 		this.state = { value };
 		this.key = undefined;
-		this.pos = undefined;
+		this.pos = -1;
 	}
 
 	handleFocus = (event) => {
@@ -61,6 +61,31 @@ return;
 		//let pos = Math.max(this.refs.input.selectionStart, this.refs.input.selectionEnd);
 		let pos = this.refs.input.selectionStart;
 		if (this.props.consoleLog) console.log('>>> Code4.handleKeyUp >>> value ="' + event.target.value + '" >>> key =', event.key, '>>> pos =', pos);
+
+		// TODO: ignore/delte the 2 lines above!
+		if (!event.key.match(/\d|ArrowLeft|ArrowRight|Delete/)) {
+			return;
+		}
+		console.log('HANDLE KEY UP >>> key =', event.key);
+		if (event.key === 'ArrowLeft') {
+			if (this.pos == 11) {
+				this.pos -= 1;
+			} else {
+				this.pos -= 2;
+			}
+		} else if (event.key === 'Delete') {
+			// noop
+		} else {
+			// ArrowRight, Digit [0-9]
+			this.pos += 2;
+		}
+		if (this.pos < 0) {
+			this.pos = 0;
+		} else if (this.pos > 11) {
+			this.pos = 11;
+		}
+		this.refs.input.setSelectionRange(this.pos, this.pos);
+
 return;
 		switch (event.key) {
 			case 'ArrowRight':
@@ -93,7 +118,7 @@ return;
 
 		if (this.key === 'Backspace') {
 			console.log('Backspace')
-			value = value.replace(/\d$/, '');
+			value = value.replace(/\d$/, '').replace(/(\d)\d/, '$1');
 		} else if (this.key === 'Delete') {
 			console.log('Delete');
 			value = value.replace(/(\d)\d/, '$1');
@@ -105,7 +130,7 @@ return;
 		if (this.props.consoleLog) console.log('>>> Code4.handleChange >>> modified value ="' + value + '"');
 		this.setState({ value });
 		this.key = undefined;
-        this.pos = undefined;
+        //this.pos = undefined;
 	};
 
 	handleBlur = (event) => {
