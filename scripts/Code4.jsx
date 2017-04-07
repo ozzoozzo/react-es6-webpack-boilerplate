@@ -32,16 +32,19 @@ class Code4 extends PureComponent {
 		//let pos = Math.max(this.refs.input.selectionStart, this.refs.input.selectionEnd);
 		let pos = this.refs.input.selectionEnd;
 		if (this.props.consoleLog) console.log('>>> Code4.handleFocus >>> pos(A) =', pos);
-		if (pos % 2 == 0 && pos > 0) pos--;
+		if (pos % 2 == 1) pos--;
 		if (this.props.consoleLog) console.log('>>> Code4.handleFocus >>> pos(B) =', pos);
-return;
-		this.refs.input.setSelectionRange(pos, pos);
+//return;
+		if (pos == this.pos) return;
+		console.log('SET SELECTION RANGE >>> pos =', pos);
+		this.pos = pos;
+		this.refs.input.setSelectionRange(this.pos, this.pos);
 	};
 
 //	handleClick = (event) => this.handleFocus(event);
 	handleClick = (event) => {
-return;
 		if (this.props.consoleLog) console.log('>>> Code4.handleClck >>> value ="' + event.target.value + '"');
+//return;
 		this.handleFocus(event);
 	};
 
@@ -130,7 +133,7 @@ return;
 		if (this.props.consoleLog) console.log('>>> Code4.handleChange >>> modified value ="' + value + '"');
 		this.setState({ value });
 		this.key = undefined;
-        //this.pos = undefined;
+        //this.pos = -1;
 	};
 
 	handleBlur = (event) => {
