@@ -15,6 +15,8 @@ class Code4 extends PureComponent {
 	- copy/paste with keys (Ctrl C, Ctrl X, Ctrl V) -> needs to be handled
 	- copy/paste with mouse (right click -> copy/cut/paste) -> needs to be handled
 	- Enter key -> check/handle?
+	- handle selection of text with mouse -> this needs to be prevented!
+	- focus with tab (coming from previous form field) -> all text is selected -> this needs to be prevented!
 */
 
 	constructor(props) {
