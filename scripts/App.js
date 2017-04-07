@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Code from './Code';
 import Code2 from './Code2';
 import Code3 from './Code3';
+import Code4 from './Code4';
 import InputFields from './InputFields';
 import InputNew from './InputNew';
 import InputDropdown from './InputDropdown';
@@ -10,7 +11,7 @@ import InputDropdown from './InputDropdown';
 class App extends Component {
 
 	componentDidMount(){
-		this.nameInput.focus();
+		//this.nameInput.focus();
 	}
 
 	handleFormSubmit = (event) => {
@@ -20,6 +21,7 @@ class App extends Component {
 
 	render() {
 		const dummy = () => {};
+		const dump = (name, value) => { console.log(name, '=', value); };
 		const options = [
 			'hansi@domain.com',
 			'greti.das.geht.immer.weiter@bla.ohne.ende.ch',
@@ -103,7 +105,21 @@ class App extends Component {
 				<InputNew label="E-mail address" name="email" value="" required onChange={dummy} />
 				<br /><br /><br />
 
-				<h2>Code Input v3</h2>
+				<h2>Code Input v4 (with word-spacing)</h2>
+				<form onSubmit={this.handleFormSubmit}>
+					<Code4 label="Label" name="code-input-v4-1" value="000000" consoleLog onChange={dump} />
+					<br /><br />
+					<Code4 label="Activation code" name="code-input-v4-2" value="123456" required consoleLog onChange={dump} />
+					<br /><br />
+					<div style={{ padding: '20px', backgroundColor: '#FFDCC0' }}>
+						<Code4 name="code-input-v4-3" containerBg="#FFDCC0" consoleLog onChange={dump} />
+					</div>
+					<br /><br />
+					<input type="submit" value="Submit" />
+				</form>
+				<br /><br /><br />
+
+				<h2>Code Input v3 (with letter-spacing)</h2>
 				<form onSubmit={this.handleFormSubmit}>
 					<Code3 label="Label" name="code-input-v3-1" value="000000" consoleLog />
 					<br /><br />
