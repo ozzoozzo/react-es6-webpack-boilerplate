@@ -17,30 +17,12 @@ class Code4 extends PureComponent {
 	- focus with tab (coming from previous form field) -> all text is selected -> un-select text and set caret to end of input field (end of value)
 	- copy/paste with keys (Ctrl C, Ctrl X, Ctrl V) -> no special handling implemented!
 	- copy/paste with mouse (right click -> copy/cut/paste) -> no special handling implemented!
-
-	TODO/CHECK
-	- Enter key -> check/handle?
+	- 'Enter' key -> check/handle -> this is needed for a possible form submit -> pressing the 'Enter' key will trigger a blur of the code input field (and this blur itself will then trigger the onBlur handler and this handler will execute the callback)
 */
 
 /*
-		switch (event.key) {
-			case 'ArrowRight':
-			case 'ArrowLeft':
-			case 'Home':
-			case 'End':
-			case 'PageUp':
-			case 'PageDown':
-			case 'Enter':
-			case 'Insert':
-			case 'Backspace':
-			case 'Delete':
-			default:
-				if (event.key.match(/\d/) === null) {
-					event.preventDefault();
-					event.stopPropagation();
-					return;
-				}
-		}
+	event.preventDefault();
+	event.stopPropagation();
 */
 
 	constructor(props) {
@@ -83,7 +65,7 @@ class Code4 extends PureComponent {
 		console.log('ADJUST POS >>> key =', this.key);
 		let pos = this.pos;
 		if (this.key === 'ArrowLeft' || this.key === 'Backspace') {
-			if (pos == maxLength) {
+			if (pos === maxLength) {
 				pos -= 1;
 			} else {
 				pos -= 2;
@@ -103,7 +85,7 @@ class Code4 extends PureComponent {
 	}
 
 	updatePos(pos) {
-		//if (pos == this.pos) return; // don't use this check: text selections will be possible when this check is active!
+		//if (pos === this.pos) return; // don't use this check: text selections will be possible when this check is active!
 		console.log('setSelectionRange >>> pos =', pos);
 		this.refs.input.setSelectionRange(pos, pos);
 		this.pos = pos;
@@ -112,7 +94,7 @@ class Code4 extends PureComponent {
 	handleFocus = (event) => {
 		this.log('handleFocus, selectionEnd = ' + this.refs.input.selectionEnd);
 		let pos = this.refs.input.selectionEnd;
-		if (pos < maxLength && pos % 2 == 1) pos--;
+		if (pos < maxLength && pos % 2 === 1) pos--;
 		this.updatePos(pos);
 	};
 
@@ -129,8 +111,10 @@ class Code4 extends PureComponent {
 	};
 
 	handleKeyPress = (event) => {
-		// not needed -> FIXME: remove this function!
 		this.log('handleKeyPress');
+		if (this.key === 'Enter') {
+			this.refs.input.blur();
+		}
 	};
 
 	handleKeyUp = (event) => {
@@ -146,7 +130,7 @@ class Code4 extends PureComponent {
 		this.log('handleChange', value);
 
 		if (this.key === 'Backspace') {
-			if (this.pos == value.length + 1) {
+			if (this.pos === value.length + 1) {
 				console.log('Backspace: end of value')
 				value = value.replace(/\d$/, '');
 			} else {

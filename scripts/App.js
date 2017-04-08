@@ -10,18 +10,36 @@ import InputDropdown from './InputDropdown';
 
 class App extends Component {
 
+	constructor(props) {
+		super(props);
+		this.codeValues = {
+			code1: undefined,
+			code2: undefined,
+			code3: undefined,
+		};
+	}
+
+
 	componentDidMount(){
 		//this.nameInput.focus();
 	}
 
 	handleFormSubmit = (event) => {
-		alert('Form Submit');
+		console.log('Form Submit >>> codeValue =', this.codeValues);
 		event.preventDefault();
 	};
 
 	render() {
 		const dummy = () => {};
 		const dump = (name, value) => { console.log(name, '=', value); };
+		const dumpAndStore = (name, value) => {
+			dump(name, value);
+			switch (name) {
+				case 'code-input-v4-1': this.codeValues.code1 = value; break;
+				case 'code-input-v4-2': this.codeValues.code2 = value; break;
+				case 'code-input-v4-3': this.codeValues.code3 = value; break;
+			}
+		};
 		const options = [
 			'hansi@domain.com',
 			'greti.das.geht.immer.weiter@bla.ohne.ende.ch',
@@ -107,12 +125,12 @@ class App extends Component {
 
 				<h2>Code Input v4 (with word-spacing)</h2>
 				<form onSubmit={this.handleFormSubmit}>
-					<Code4 label="Label" name="code-input-v4-1" value="000000" consoleLog onChange={dump} />
+					<Code4 label="Label" name="code-input-v4-1" value="000000" consoleLog onChange={dumpAndStore} />
 					<br /><br />
-					<Code4 label="Activation code" name="code-input-v4-2" value="123456" required consoleLog onChange={dump} />
+					<Code4 label="Activation code" name="code-input-v4-2" value="123456" required consoleLog onChange={dumpAndStore} />
 					<br /><br />
 					<div style={{ padding: '20px', backgroundColor: '#FFDCC0' }}>
-						<Code4 label="Label - Lorem ipsum dolor sit amet, consetetur sadipscing elitr." name="code-input-v4-3" consoleLog onChange={dump} />
+						<Code4 label="Label - Lorem ipsum dolor sit amet, consetetur sadipscing elitr." name="code-input-v4-3" consoleLog onChange={dumpAndStore} />
 					</div>
 					<br /><br />
 					<input type="submit" value="Submit" />
