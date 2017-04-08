@@ -8,7 +8,7 @@ class Code4 extends PureComponent {
 	- keys 'Home', 'End' -> work correctly -> no special handling needed!
 	- keys 'PageUp', 'PageDown' -> work correctly -> no special handling needed!
 	- keys 'Backspace', 'Delete' -> work correctly -> handling implemented in handleChange
-	- cursor keys -> position of caret needs to be adjusted
+	- cursor keys left/right/up/down -> work correctly
 
 	TODO:
 	- focus and click -> position of caret needs to be adjusted
@@ -21,11 +21,16 @@ class Code4 extends PureComponent {
 
 	constructor(props) {
 		super(props);
-		let value = props.value || '';
-		value = value.replace(/\D/g, '').replace(/(\d)/g, '$1 ').trim();
+		const value = this.formatValue(props.value || '');
 		this.state = { value };
 		this.key = undefined;
 		this.pos = -1;
+	}
+
+	formatValue(value) {
+		value = value.replace(/\D/g, '').replace(/(\d)/g, '$1 ');
+		if (value.length > 11) value = value.trim();
+		return value;
 	}
 
 	handleFocus = (event) => {
@@ -127,8 +132,7 @@ return;
 			value = value.replace(/(\d)\d/, '$1');
 		}
 
-		value = value.replace(/\D/g, '').replace(/(\d)/g, '$1 ');
-		if (value.length > 11) value = value.trim();
+		value = this.formatValue(value);
 
 		if (this.props.consoleLog) console.log('>>> Code4.handleChange >>> modified value ="' + value + '"');
 		this.setState({ value });
