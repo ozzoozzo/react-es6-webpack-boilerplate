@@ -21,12 +21,42 @@ class Code4 extends PureComponent {
 	- focus with tab (coming from previous form field) -> all text is selected -> this needs to be prevented!
 */
 
+/*
+		switch (event.key) {
+			case 'ArrowRight':
+			case 'ArrowLeft':
+			case 'Home':
+			case 'End':
+			case 'PageUp':
+			case 'PageDown':
+			case 'Enter':
+			case 'Insert':
+			case 'Backspace':
+			case 'Delete':
+			default:
+				if (event.key.match(/\d/) === null) {
+					event.preventDefault();
+					event.stopPropagation();
+					return;
+				}
+		}
+*/
+
 	constructor(props) {
 		super(props);
 		const value = this.formatValue(props.value || '');
 		this.state = { value };
 		this.key = undefined;
 		this.pos = -1;
+		this.log('constructor');
+	}
+
+	log(text, param) {
+		if (param !== undefined) {
+			console.log('pos =', this.pos, ' | key =', this.key, ' | value =', this.state.value, ' |', text, ' |', param);
+		} else {
+			console.log('pos =', this.pos, ' | key =', this.key, ' | value =', this.state.value, ' |', text);
+		}
 	}
 
 	formatValue(value) {
@@ -35,120 +65,94 @@ class Code4 extends PureComponent {
 		return value;
 	}
 
-	handleFocus = (event) => {
-		//let pos = Math.max(this.refs.input.selectionStart, this.refs.input.selectionEnd);
-		let pos = this.refs.input.selectionEnd;
-		if (this.props.consoleLog) console.log('>>> Code4.handleFocus >>> pos(A) =', pos);
-		if (pos % 2 == 1) pos--;
-		if (this.props.consoleLog) console.log('>>> Code4.handleFocus >>> pos(B) =', pos);
-//return;
-		if (pos == this.pos) return;
-		console.log('SET SELECTION RANGE >>> pos =', pos);
+	updatePos(pos) {
+		//if (pos == this.pos) return; // don't use this check: text selections will be possible when this check is active!
+		console.log('setSelectionRange >>> pos =', pos);
+		this.refs.input.setSelectionRange(pos, pos);
 		this.pos = pos;
-		this.refs.input.setSelectionRange(this.pos, this.pos);
+	}
+
+	handleFocus = (event) => {
+		this.log('handleFocus');
+		let pos = this.refs.input.selectionEnd;
+		if (pos < maxLength && pos % 2 == 1) pos--;
+		this.updatePos(pos);
 	};
 
 //	handleClick = (event) => this.handleFocus(event);
 	handleClick = (event) => {
-		if (this.props.consoleLog) console.log('>>> Code4.handleClck >>> value ="' + event.target.value + '"');
-//return;
+		this.log('handleClick');
 		this.handleFocus(event);
 	};
 
 	handleKeyDown = (event) => {
-		// not needed -> FIXME: remove this function!
 		this.key = event.key;
 		this.pos = this.refs.input.selectionEnd;
-		if (this.props.consoleLog) console.log('>>> Code4.handleKeyDown >>> value ="' + event.target.value + '" >>> key =', this.key, '>>> pos =', this.pos);
+		this.log('handleKeyDown');
 	};
 
 	handleKeyPress = (event) => {
 		// not needed -> FIXME: remove this function!
-		if (this.props.consoleLog) console.log('>>> Code4.handleKeyPress >>> value ="' + event.target.value + '" >>> key =', event.key);
+		this.log('handleKeyPress');
 	};
 
 	handleKeyUp = (event) => {
-		//let pos = Math.max(this.refs.input.selectionStart, this.refs.input.selectionEnd);
-		let pos = this.refs.input.selectionStart;
-		if (this.props.consoleLog) console.log('>>> Code4.handleKeyUp >>> value ="' + event.target.value + '" >>> key =', event.key, '>>> pos =', pos);
-
-		// TODO: ignore/delte the 2 lines above!
+		this.log('handleKeyUp');
 		if (!event.key.match(/\d|ArrowLeft|ArrowRight|Delete/)) {
 			return;
 		}
 		console.log('HANDLE KEY UP >>> key =', event.key);
+		let pos = this.pos;
 		if (event.key === 'ArrowLeft') {
-			if (this.pos == maxLength) {
-				this.pos -= 1;
+			if (pos == maxLength) {
+				pos -= 1;
 			} else {
-				this.pos -= 2;
+				pos -= 2;
 			}
 		} else if (event.key === 'Delete') {
 			// noop
 		} else {
 			// ArrowRight, Digit [0-9]
-			this.pos += 2;
+			pos += 2;
 		}
-		if (this.pos < 0) {
-			this.pos = 0;
-		} else if (this.pos > maxLength) {
-			this.pos = maxLength;
+		if (pos < 0) {
+			pos = 0;
+		} else if (pos > maxLength) {
+			pos = maxLength;
 		}
-		this.refs.input.setSelectionRange(this.pos, this.pos);
-
-return;
-		switch (event.key) {
-			case 'ArrowRight':
-				pos++;
-				break;
-			case 'ArrowLeft': // fall through
-			case 'Home': // fall through
-			case 'End': // fall through
-			case 'PageUp': // fall through
-			case 'PageDown': // fall through
-			case 'Enter': // fall through
-			case 'Insert': // fall through
-			case 'Backspace': // fall through
-			case 'Delete':
-				break;
-			default:
-				if (event.key.match(/\d/) === null) {
-					event.preventDefault();
-					event.stopPropagation();
-					return;
-				}
-		}
-		if (pos % 2 == 0 && pos > 0) pos--;
-		this.refs.input.setSelectionRange(pos, pos);
+		this.updatePos(pos);
 	};
 
 	handleChange = (event) => {
 		let value = event.target.value;
-		if (this.props.consoleLog) console.log('>>> Code4.handleChange >>> user value ="' + value + '" >>> key =', this.key);
+
+		this.log('handleChange', value);
 
 		if (this.key === 'Backspace') {
-			console.log('Backspace')
-			value = value.replace(/\d$/, '').replace(/(\d)\d/, '$1');
+			if (this.pos == value.length + 1) {
+				console.log('Backspace: end of value')
+				value = value.replace(/\d$/, '');
+			} else {
+				console.log('Backspace: middle')
+				value = value.replace(/\d(\d)/, '$1');
+			}
 		} else if (this.key === 'Delete') {
 			console.log('Delete');
 			value = value.replace(/(\d)\d/, '$1');
 		}
-
 		value = this.formatValue(value);
-
-		if (this.props.consoleLog) console.log('>>> Code4.handleChange >>> modified value ="' + value + '"');
 		this.setState({ value });
 		this.key = undefined;
         //this.pos = -1;
 	};
 
 	handleBlur = (event) => {
-return;
+		this.log('handleBlur');
 		this.props.onChange(event.target.name, event.target.value.replace(/\D/g, '')); // callback to parent component
 	};
 
 	render() {
-		if (this.props.consoleLog) console.log('>>> Code4.render');
+		this.log('render');
 		const { name, label, required } = this.props;
 		const { value } = this.state;
 		const labelClassName = required ? 'required' : null;
