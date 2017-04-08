@@ -91,17 +91,17 @@ class Code4 extends PureComponent {
 		this.pos = pos;
 	}
 
-	handleFocus = (event) => {
+	handleFocus = () => {
 		this.log('handleFocus, selectionEnd = ' + this.refs.input.selectionEnd);
 		let pos = this.refs.input.selectionEnd;
 		if (pos < maxLength && pos % 2 === 1) pos--;
 		this.updatePos(pos);
 	};
 
-//	handleClick = (event) => this.handleFocus(event);
-	handleClick = (event) => {
+//	handleClick = () => this.handleFocus();
+	handleClick = () => {
 		this.log('handleClick');
-		this.handleFocus(event);
+		this.handleFocus();
 	};
 
 	handleKeyDown = (event) => {
@@ -110,14 +110,15 @@ class Code4 extends PureComponent {
 		this.log('handleKeyDown');
 	};
 
-	handleKeyPress = (event) => {
+	handleKeyPress = () => {
 		this.log('handleKeyPress');
 		if (this.key === 'Enter') {
 			this.refs.input.blur();
 		}
 	};
 
-	handleKeyUp = (event) => {
+	handleKeyUp = () => {
+		this.log('handleKeyUp');
 		if (this.key !== undefined && this.key.match(/ArrowLeft|ArrowRight/)) {
 			this.adjustPos();
 		}
