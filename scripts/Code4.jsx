@@ -1,6 +1,8 @@
 require('./Code4.less');
 import React, { PureComponent } from 'react';
 
+const maxLength = 11;
+
 class Code4 extends PureComponent {
 
 /*
@@ -29,7 +31,7 @@ class Code4 extends PureComponent {
 
 	formatValue(value) {
 		value = value.replace(/\D/g, '').replace(/(\d)/g, '$1 ');
-		if (value.length > 11) value = value.trim();
+		if (value.length > maxLength) value = value.trim();
 		return value;
 	}
 
@@ -76,7 +78,7 @@ class Code4 extends PureComponent {
 		}
 		console.log('HANDLE KEY UP >>> key =', event.key);
 		if (event.key === 'ArrowLeft') {
-			if (this.pos == 11) {
+			if (this.pos == maxLength) {
 				this.pos -= 1;
 			} else {
 				this.pos -= 2;
@@ -89,8 +91,8 @@ class Code4 extends PureComponent {
 		}
 		if (this.pos < 0) {
 			this.pos = 0;
-		} else if (this.pos > 11) {
-			this.pos = 11;
+		} else if (this.pos > maxLength) {
+			this.pos = maxLength;
 		}
 		this.refs.input.setSelectionRange(this.pos, this.pos);
 
@@ -164,7 +166,7 @@ return;
 					onKeyUp={this.handleKeyUp}
 					onChange={this.handleChange}
 					onBlur={this.handleBlur}
-					maxLength={11}
+					maxLength={maxLength}
 					autoComplete="off"
 				/>
 				<i>
