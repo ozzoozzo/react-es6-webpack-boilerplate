@@ -97,6 +97,7 @@ class Code4 extends PureComponent {
 	};
 
 	handleKeyUp = (event) => {
+return; // FIXME: remove this handler -> not needed anymore!
 		this.log('handleKeyUp');
 		if (!event.key.match(/\d|ArrowLeft|ArrowRight|Delete/)) {
 			return;
@@ -123,6 +124,33 @@ class Code4 extends PureComponent {
 		this.updatePos(pos);
 	};
 
+	adjustPos() {
+		this.log('adjustPos');
+		if (!this.key.match(/\d|ArrowLeft|ArrowRight|Backspace|Delete/)) {
+			return;
+		}
+		console.log('ADJUST POS >>> key =', this.key);
+		let pos = this.pos;
+		if (this.key === 'ArrowLeft' || this.key === 'Backspace') {
+			if (pos == maxLength) {
+				pos -= 1;
+			} else {
+				pos -= 2;
+			}
+		} else if (this.key === 'Delete') {
+			// noop
+		} else {
+			// ArrowRight, Digit [0-9]
+			pos += 2;
+		}
+		if (pos < 0) {
+			pos = 0;
+		} else if (pos > maxLength) {
+			pos = maxLength;
+		}
+		this.updatePos(pos);
+	}
+
 	handleChange = (event) => {
 		let value = event.target.value;
 
@@ -141,8 +169,8 @@ class Code4 extends PureComponent {
 			value = value.replace(/(\d)\d/, '$1');
 		}
 		value = this.formatValue(value);
-		this.setState({ value });
-		this.key = undefined;
+		this.setState({ value }, this.adjustPos);
+		//this.key = undefined;
         //this.pos = -1;
 	};
 
