@@ -6,19 +6,20 @@ const maxLength = 11;
 class Code4 extends PureComponent {
 
 /*
-	current development state:
-	- keys 'Home', 'End' -> work correctly -> no special handling needed!
-	- keys 'PageUp', 'PageDown' -> work correctly -> no special handling needed!
-	- keys 'Backspace', 'Delete' -> work correctly -> handling implemented in handleChange
-	- cursor keys left/right/up/down -> work correctly
+	current development state -> the following things work correctly:
+	- keys 'Home', 'End' -> no special handling needed -> move caret to start (Home) or end (End)
+	- keys 'PageUp', 'PageDown' -> no special handling needed -> these keys alter the scroll position of the whole page
+	- keys 'Backspace', 'Delete' -> handling implemented in handleChange, adjust position of caret
+	- cursor keys 'ArrowLeft'/'ArrowRight' -> adjust position of caret
+	- cursor keys 'ArrowUp'/'ArrowDown' -> -> no special handling needed -> move caret to start (ArrowUp) or end (ArrowDown)
+	- focus and click -> position of caret
+	- handle selection of text with mouse -> this needs to be prevented -> position of caret
+	- focus with tab (coming from previous form field) -> all text is selected -> un-select text and set caret to end of input field (end of value)
+	- copy/paste with keys (Ctrl C, Ctrl X, Ctrl V) -> no special handling implemented!
+	- copy/paste with mouse (right click -> copy/cut/paste) -> no special handling implemented!
 
-	TODO:
-	- focus and click -> position of caret needs to be adjusted
-	- copy/paste with keys (Ctrl C, Ctrl X, Ctrl V) -> needs to be handled
-	- copy/paste with mouse (right click -> copy/cut/paste) -> needs to be handled
+	TODO/CHECK
 	- Enter key -> check/handle?
-	- handle selection of text with mouse -> this needs to be prevented!
-	- focus with tab (coming from previous form field) -> all text is selected -> this needs to be prevented!
 */
 
 /*
@@ -46,8 +47,7 @@ class Code4 extends PureComponent {
 		super(props);
 		const value = this.formatValue(props.value || '');
 		this.state = { value };
-		this.key = undefined;
-		this.pos = -1;
+		this.reset();
 		this.log('constructor');
 	}
 
@@ -65,68 +65,19 @@ class Code4 extends PureComponent {
 		return value;
 	}
 
-	updatePos(pos) {
-		//if (pos == this.pos) return; // don't use this check: text selections will be possible when this check is active!
-		console.log('setSelectionRange >>> pos =', pos);
-		this.refs.input.setSelectionRange(pos, pos);
-		this.pos = pos;
+	reset() {
+		this.key = undefined;
+		this.pos = -1;
 	}
 
-	handleFocus = (event) => {
-		this.log('handleFocus');
-		let pos = this.refs.input.selectionEnd;
-		if (pos < maxLength && pos % 2 == 1) pos--;
-		this.updatePos(pos);
-	};
-
-//	handleClick = (event) => this.handleFocus(event);
-	handleClick = (event) => {
-		this.log('handleClick');
-		this.handleFocus(event);
-	};
-
-	handleKeyDown = (event) => {
-		this.key = event.key;
-		this.pos = this.refs.input.selectionEnd;
-		this.log('handleKeyDown');
-	};
-
-	handleKeyPress = (event) => {
-		// not needed -> FIXME: remove this function!
-		this.log('handleKeyPress');
-	};
-
-	handleKeyUp = (event) => {
-return; // FIXME: remove this handler -> not needed anymore!
-		this.log('handleKeyUp');
-		if (!event.key.match(/\d|ArrowLeft|ArrowRight|Delete/)) {
-			return;
-		}
-		console.log('HANDLE KEY UP >>> key =', event.key);
-		let pos = this.pos;
-		if (event.key === 'ArrowLeft') {
-			if (pos == maxLength) {
-				pos -= 1;
-			} else {
-				pos -= 2;
-			}
-		} else if (event.key === 'Delete') {
-			// noop
-		} else {
-			// ArrowRight, Digit [0-9]
-			pos += 2;
-		}
-		if (pos < 0) {
-			pos = 0;
-		} else if (pos > maxLength) {
-			pos = maxLength;
-		}
-		this.updatePos(pos);
-	};
+	adjustPostAndReset() {
+		this.adjustPos();
+		this.reset();
+	}
 
 	adjustPos() {
 		this.log('adjustPos');
-		if (!this.key.match(/\d|ArrowLeft|ArrowRight|Backspace|Delete/)) {
+		if (this.key === undefined || !this.key.match(/\d|ArrowLeft|ArrowRight|Backspace|Delete/)) {
 			return;
 		}
 		console.log('ADJUST POS >>> key =', this.key);
@@ -151,6 +102,44 @@ return; // FIXME: remove this handler -> not needed anymore!
 		this.updatePos(pos);
 	}
 
+	updatePos(pos) {
+		//if (pos == this.pos) return; // don't use this check: text selections will be possible when this check is active!
+		console.log('setSelectionRange >>> pos =', pos);
+		this.refs.input.setSelectionRange(pos, pos);
+		this.pos = pos;
+	}
+
+	handleFocus = (event) => {
+		this.log('handleFocus, selectionEnd = ' + this.refs.input.selectionEnd);
+		let pos = this.refs.input.selectionEnd;
+		if (pos < maxLength && pos % 2 == 1) pos--;
+		this.updatePos(pos);
+	};
+
+//	handleClick = (event) => this.handleFocus(event);
+	handleClick = (event) => {
+		this.log('handleClick');
+		this.handleFocus(event);
+	};
+
+	handleKeyDown = (event) => {
+		this.key = event.key;
+		this.pos = this.refs.input.selectionEnd;
+		this.log('handleKeyDown');
+	};
+
+	handleKeyPress = (event) => {
+		// not needed -> FIXME: remove this function!
+		this.log('handleKeyPress');
+	};
+
+	handleKeyUp = (event) => {
+		if (this.key !== undefined && this.key.match(/ArrowLeft|ArrowRight/)) {
+			this.adjustPos();
+		}
+		this.reset();
+	};
+
 	handleChange = (event) => {
 		let value = event.target.value;
 
@@ -169,9 +158,7 @@ return; // FIXME: remove this handler -> not needed anymore!
 			value = value.replace(/(\d)\d/, '$1');
 		}
 		value = this.formatValue(value);
-		this.setState({ value }, this.adjustPos);
-		//this.key = undefined;
-        //this.pos = -1;
+		this.setState({ value }, this.adjustPostAndReset);
 	};
 
 	handleBlur = (event) => {
