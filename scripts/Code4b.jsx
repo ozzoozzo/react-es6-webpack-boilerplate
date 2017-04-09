@@ -9,13 +9,6 @@ class Code4b extends PureComponent {
 		super(props);
 		const value = this.formatValue(props.value || '');
 		this.state = { value };
-		this.reset();
-	}
-
-	formatValue(value) {
-		value = value.replace(/\D/g, '').replace(/(\d)/g, '$1 ');
-		if (value.length > maxLength) value = value.trim();
-		return value;
 	}
 
 	reset() {
@@ -23,9 +16,10 @@ class Code4b extends PureComponent {
 		this.pos = -1;
 	}
 
-	adjustPosAndReset() {
-		this.adjustPos();
-		this.reset();
+	formatValue(value) {
+		value = value.replace(/\D/g, '').replace(/(\d)/g, '$1 ');
+		if (value.length > maxLength) value = value.trim();
+		return value;
 	}
 
 	adjustPos() {
@@ -58,7 +52,13 @@ class Code4b extends PureComponent {
 		this.pos = pos;
 	}
 
+	fireCallback() {
+		// callback to parent component
+		this.props.onChange(this.props.name, this.state.value.replace(/\D/g, ''));
+	}
+
 	handleFocus = () => {
+		this.reset();
 		let pos = this.refs.input.selectionEnd;
 		if (pos < maxLength && pos % 2 === 1) pos--;
 		this.updatePos(pos);
@@ -75,7 +75,7 @@ class Code4b extends PureComponent {
 
 	handleKeyPress = () => {
 		if (this.key === 'Enter') {
-			this.refs.input.blur();
+			this.fireCallback();
 		}
 	};
 
@@ -83,7 +83,6 @@ class Code4b extends PureComponent {
 		if (this.key !== undefined && this.key.match(/ArrowLeft|ArrowRight/)) {
 			this.adjustPos();
 		}
-		this.reset();
 	};
 
 	handleChange = (event) => {
@@ -98,11 +97,11 @@ class Code4b extends PureComponent {
 			value = value.replace(/(\d)\d/, '$1');
 		}
 		value = this.formatValue(value);
-		this.setState({ value }, this.adjustPosAndReset);
+		this.setState({ value }, this.adjustPos);
 	};
 
-	handleBlur = (event) => {
-		this.props.onChange(event.target.name, event.target.value.replace(/\D/g, '')); // callback to parent component
+	handleBlur = () => {
+		this.fireCallback();
 	};
 
 	render() {

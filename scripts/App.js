@@ -33,13 +33,13 @@ class App extends Component {
 	}
 
 	handleFormSubmit = (event) => {
-		console.log('Form Submit >>> codeValue =', this.codeValues);
+		console.log('Form Submit >>> codeValue =', JSON.stringify(this.codeValues));
 		event.preventDefault();
 	};
 
 	render() {
 		const dummy = () => {};
-		const dump = (name, value) => { console.log(name, '=', value); };
+		const dump = (name, value) => { console.log('CALLBACK', name, '=', value); };
 		const dumpAndStore = (name, value) => {
 			dump(name, value);
 			switch (name) {

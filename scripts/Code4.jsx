@@ -6,6 +6,38 @@ const maxLength = 11;
 class Code4 extends PureComponent {
 
 /*
+	keys and their effects within an input field
+		general (Chrome, Firefox, Internet Explorer, Edge)
+			ArrowLeft    move the caret 1 to the left
+			ArrowRight   move the caret 1 to the right
+			Home         move the caret to the rist pos in the input
+			End          move the caret to the last pos in the input
+			Backspace    remove the char behind the caret
+			Delete       remove the char before the caret
+			Enter        submit the form
+		Chrome v57
+			ArrowUp      -> same effect as Home
+			ArrowDown    -> same effect as End
+			PageUp       -> scroll up the webpage
+			PageDown     -> scroll down the webpage
+		Firefox v50
+			ArrowUp      -> same effect as Home
+			ArrowDown    -> same effect as End
+			PageUp       -> no effect
+			PageDown     -> no effect
+		Internet Explorer v11
+			ArrowUp      -> no effect
+			ArrowDown    -> no effect
+			PageUp       -> same effect as Home
+			PageDown     -> same effect as End
+		Edge v14
+			ArrowUp      -> no effect
+			ArrowDown    -> no effect
+			PageUp       -> same effect as Home
+			PageDown     -> same effect as End
+*/
+
+/*
 	current development state -> the following things work correctly:
 	- keys 'Home', 'End' -> no special handling needed -> move caret to start (Home) or end (End)
 	- keys 'PageUp', 'PageDown' -> no special handling needed -> these keys alter the scroll position of the whole page
@@ -17,7 +49,7 @@ class Code4 extends PureComponent {
 	- focus with tab (coming from previous form field) -> all text is selected -> un-select text and set caret to end of input field (end of value)
 	- copy/paste with keys (Ctrl C, Ctrl X, Ctrl V) -> no special handling implemented!
 	- copy/paste with mouse (right click -> copy/cut/paste) -> no special handling implemented!
-	- 'Enter' key -> check/handle -> this is needed for a possible form submit -> pressing the 'Enter' key will trigger a blur of the code input field (and this blur itself will then trigger the onBlur handler and this handler will execute the callback)
+	- 'Enter' key -> check/handle -> this handling is needed for a form submit -> pressing the 'Enter' key will fire the parent's callback function
 */
 
 /*
@@ -29,8 +61,12 @@ class Code4 extends PureComponent {
 		super(props);
 		const value = this.formatValue(props.value || '');
 		this.state = { value };
-		this.reset();
 		this.log('constructor');
+	}
+
+	reset() {
+		this.key = undefined;
+		this.pos = -1;
 	}
 
 	log(text, param) {
@@ -45,16 +81,6 @@ class Code4 extends PureComponent {
 		value = value.replace(/\D/g, '').replace(/(\d)/g, '$1 ');
 		if (value.length > maxLength) value = value.trim();
 		return value;
-	}
-
-	reset() {
-		this.key = undefined;
-		this.pos = -1;
-	}
-
-	adjustPosAndReset() {
-		this.adjustPos();
-		this.reset();
 	}
 
 	adjustPos() {
@@ -86,19 +112,24 @@ class Code4 extends PureComponent {
 
 	updatePos(pos) {
 		//if (pos === this.pos) return; // don't use this check: text selections will be possible when this check is active!
-		console.log('setSelectionRange >>> pos =', pos);
+		console.log('updatePos >>> pos =', pos);
 		this.refs.input.setSelectionRange(pos, pos);
 		this.pos = pos;
 	}
 
+	fireCallback() {
+		// callback to parent component
+		this.props.onChange(this.props.name, this.state.value.replace(/\D/g, ''));
+	}
+
 	handleFocus = () => {
-		this.log('handleFocus, selectionEnd = ' + this.refs.input.selectionEnd);
+		this.log('handleFocus >>> selectionEnd = ' + this.refs.input.selectionEnd);
+		this.reset();
 		let pos = this.refs.input.selectionEnd;
 		if (pos < maxLength && pos % 2 === 1) pos--;
 		this.updatePos(pos);
 	};
 
-//	handleClick = () => this.handleFocus();
 	handleClick = () => {
 		this.log('handleClick');
 		this.handleFocus();
@@ -113,7 +144,7 @@ class Code4 extends PureComponent {
 	handleKeyPress = () => {
 		this.log('handleKeyPress');
 		if (this.key === 'Enter') {
-			this.refs.input.blur();
+			this.fireCallback();
 		}
 	};
 
@@ -122,14 +153,11 @@ class Code4 extends PureComponent {
 		if (this.key !== undefined && this.key.match(/ArrowLeft|ArrowRight/)) {
 			this.adjustPos();
 		}
-		this.reset();
 	};
 
 	handleChange = (event) => {
 		let value = event.target.value;
-
 		this.log('handleChange', value);
-
 		if (this.key === 'Backspace') {
 			if (this.pos === value.length + 1) {
 				console.log('Backspace: end of value')
@@ -143,12 +171,12 @@ class Code4 extends PureComponent {
 			value = value.replace(/(\d)\d/, '$1');
 		}
 		value = this.formatValue(value);
-		this.setState({ value }, this.adjustPosAndReset);
+		this.setState({ value }, this.adjustPos);
 	};
 
-	handleBlur = (event) => {
+	handleBlur = () => {
 		this.log('handleBlur');
-		this.props.onChange(event.target.name, event.target.value.replace(/\D/g, '')); // callback to parent component
+		this.fireCallback();
 	};
 
 	render() {
