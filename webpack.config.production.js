@@ -52,10 +52,10 @@ module.exports = {
 	output: {
 		path: path.join(__dirname, 'dist'),
 		filename: 'bundle.js',
-		publicPath: '/'
+		publicPath: 'dist/'
 	},
 	resolve: {
-		extensions: ['', '.js']
+		extensions: ['', '.js', '.jsx']
 	},
 	devtool: 'source-map',
 	plugins: [
@@ -72,12 +72,19 @@ module.exports = {
 		})
 	],
 	module: {
-		loaders: [
-			{
-				test: /\.jsx?$/,
-				loaders: ['babel'],
-				include: path.join(__dirname, 'scripts')
-			}
-		]
+		loaders: [{
+			test: /\.less$/,
+			loader: 'style-loader!css-loader!less-loader'
+		}, {
+			test: /\.jsx?$/,
+			loaders: ['babel-loader'],
+			include: path.join(__dirname, 'scripts')
+		}, {
+			test: /\.(png|jpg|gif)$/,
+			loader: 'url-loader?limit=8192',
+		}, {
+			test: /\.(eot|svg|ttf|woff|woff2)$/,
+			loader: 'file-loader'
+		}]
 	}
 };
