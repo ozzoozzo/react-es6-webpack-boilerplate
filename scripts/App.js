@@ -4,6 +4,7 @@ import Code from './Code';
 import Code2 from './Code2';
 import Code3 from './Code3';
 import Code4 from './Code4';
+import Code4b from './Code4b';
 import InputFields from './InputFields';
 import InputNew from './InputNew';
 import InputDropdown from './InputDropdown';
@@ -13,9 +14,16 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.codeValues = {
-			code1: undefined,
-			code2: undefined,
-			code3: undefined,
+			v4: {
+				code1: undefined,
+				code2: undefined,
+				code3: undefined,
+			},
+			v4b: {
+				code1: undefined,
+				code2: undefined,
+				code3: undefined,
+			},
 		};
 	}
 
@@ -35,9 +43,12 @@ class App extends Component {
 		const dumpAndStore = (name, value) => {
 			dump(name, value);
 			switch (name) {
-				case 'code-input-v4-1': this.codeValues.code1 = value; break;
-				case 'code-input-v4-2': this.codeValues.code2 = value; break;
-				case 'code-input-v4-3': this.codeValues.code3 = value; break;
+				case 'code-input-v4-1': this.codeValues.v4.code1 = value; break;
+				case 'code-input-v4-2': this.codeValues.v4.code2 = value; break;
+				case 'code-input-v4-3': this.codeValues.v4.code3 = value; break;
+				case 'code-input-v4b-1': this.codeValues.v4b.code1 = value; break;
+				case 'code-input-v4b-2': this.codeValues.v4b.code2 = value; break;
+				case 'code-input-v4b-3': this.codeValues.v4b.code3 = value; break;
 			}
 		};
 		const options = [
@@ -121,6 +132,20 @@ class App extends Component {
 				<InputNew label="Last name" name="lastName" value="Muster (required, disabled)" required disabled onChange={dummy} />
 				<br /><br />
 				<InputNew label="E-mail address" name="email" value="" required onChange={dummy} />
+				<br /><br /><br />
+
+				<h2>Code Input v4b (same as v4, but no console.log)</h2>
+				<form onSubmit={this.handleFormSubmit}>
+					<Code4b label="Label" name="code-input-v4b-1" value="123" onChange={dumpAndStore} />
+					<br /><br />
+					<Code4b label="Activation code" name="code-input-v4b-2" value="123456" required onChange={dumpAndStore} />
+					<br /><br />
+					<div style={{ padding: '20px', backgroundColor: '#FFDCC0' }}>
+						<Code4b label="Label - Lorem ipsum dolor sit amet, consetetur sadipscing elitr." name="code-input-v4b-3" onChange={dumpAndStore} />
+					</div>
+					<br /><br />
+					<input type="submit" value="Submit" />
+				</form>
 				<br /><br /><br />
 
 				<h2>Code Input v4 (with word-spacing)</h2>
