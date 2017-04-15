@@ -62,14 +62,14 @@ class InputFields extends Component {
 	doubleInputFields = () => {
 		const fields = Object.assign({}, this.state.fields);
 		const now = new Date().getTime();
-		Object.keys(fields).map((field, i) => { fields[`${field}-${now}`] = fields[field]; });
+		Object.keys(fields).map((field) => { fields[`${field}-${now}`] = fields[field]; });
 		if (this.state.consoleLog) console.log('>>> InputFields.doubleInputFields >>> numberOfInputFields =', Object.keys(fields).length);
 		this.setState({ fields });
 	};
 
 	handleInputFieldChange = (name, value) => {
 		if (this.state.consoleLog) console.log('>>> InputFields.handleInputFieldChange >>> name =', name, '>>> value =', value);
-        const fields = Object.assign({}, this.state.fields, { [name]: value });
+		const fields = Object.assign({}, this.state.fields, { [name]: value });
 		this.setState({ fields });
 	};
 
@@ -78,7 +78,7 @@ class InputFields extends Component {
 		const inputs = [];
 		Object.keys(fields).map((field, i) =>
 			inputs.push(<div key={i} class="gap"><Input name={field} value={fields[field]} onChange={this.handleInputFieldChange} hintChange={hintChange} colorChange={colorChange} consoleLog={consoleLog} /></div>)
-        );
+		);
 		return inputs;
 	};
 
