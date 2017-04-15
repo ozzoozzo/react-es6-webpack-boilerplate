@@ -16,8 +16,8 @@ Will Stern
 * github -> https://github.com/learncodeacademy/react-js-tutorials
 * github repositories -> https://github.com/willrstern?tab=repositories
 
+Babel
 * babel-plugin-react-html-attrs -> https://github.com/insin/babel-plugin-react-html-attrs
-
 * babel-plugin-transform-class-properties -> https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-class-properties
 
 # React ES6 Webpack Boilerplate
