@@ -33,9 +33,9 @@ class Input extends Component {
 					<input class="uwr-input" type="text" name={this.props.name} value={this.props.value} onChange={this.handleChange} autoComplete="off" />
 					<span class={this.props.value ? 'uwr-input-label-top' : 'uwr-input-label-bottom'}>{hint}</span>
 				</span>
-				<span class="uwr-input-message uwr-input-no-message"></span>
+				<span class="uwr-input-message uwr-input-no-message" />
 				<div class="uwr-message-box uwr-message-box-hidden uwr-arrow-top-right uwr-message-box-type-no-message uwr-message-box-icon-none uwr-input-message-box-arrow" data-icon-type="none">
-					<div class="uwr-message-box-content"></div>
+					<div class="uwr-message-box-content" />
 				</div>
 			</span>
 		);
